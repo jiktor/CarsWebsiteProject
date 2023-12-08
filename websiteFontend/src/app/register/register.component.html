@@ -1,1 +1,39 @@
-<p>register works!</p>
+<div class="form">
+    <h2 id="registration">Registration Form</h2>
+    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+        <label for="fname">First name</label>
+        <div>
+            <small style="color: red;" *ngIf="reactiveForm.get('firstName').errors?.['noSpaceAllowed'] && reactiveForm.get('firstName').touched">whitespaces are not allowed in this field</small>
+            <small style="color: red;" *ngIf="reactiveForm.get('firstName').errors?.['required'] && reactiveForm.get('firstName').touched">this field is required</small>
+        </div>
+        <input type="text" id="fname" formControlName="firstName" placeholder="Enter your name">
+
+        <label for="lname">Last name</label>
+        <div>
+            <small style="color: red;" *ngIf="reactiveForm.get('lastName').errors?.['noSpaceAllowed'] && reactiveForm.get('lastName').touched">whitespaces are not allowed in this field</small>
+            <small style="color: red;" *ngIf="reactiveForm.get('lastName').errors?.['required'] && reactiveForm.get('lastName').touched">this field is required</small>
+        </div>
+        <input type="text" id="lname" formControlName="lastName" placeholder="Enter your last name">
+
+        
+        <label for="email">Email</label>
+        <div>
+            <small style="color: red;" *ngIf="reactiveForm.get('email').errors?.['required'] && reactiveForm.get('email').touched">The email field is required</small>
+            <small style="color: red;" *ngIf="reactiveForm.get('email').errors?.['email'] && reactiveForm.get('email').touched">invalid email</small>
+        </div>
+        <input type="email" id="email" formControlName="email" placeholder="Enter your email">
+
+        <label for="password">Password</label>
+        <div style="color: red;" *ngIf="reactiveForm.get('password').errors && reactiveForm.get('password').touched">The password field is required</div>
+        <input type="password" id="password" formControlName="password" placeholder="Enter your password">
+
+        <label for="cpassword">Confirm Password</label>
+        <div>
+            <small style="color: red;" *ngIf="reactiveForm.get('confirmPassword').errors?.['required'] && reactiveForm.get('confirmPassword').touched">The confirm password field is required</small>
+            <small style="color: red;" *ngIf="reactiveForm.get('confirmPassword').errors?.['notMatchingPassword'] && reactiveForm.get('confirmPassword').touched">The confirm password field is required</small>
+        </div>
+        <input type="password" id="cpassword" formControlName="confirmPassword" placeholder="Confirm your password">
+
+        <input type="submit" value="Submit" id="btn">
+    </form>
+</div>

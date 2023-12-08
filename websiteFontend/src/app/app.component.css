@@ -24,19 +24,21 @@ ul {
     text-decoration: none;
   }
   .outer-container{
-    background-color: black;
+    background-color: steelblue;
     width: 100dvw; /* 100% of viewport width */
     height: 100dvh; /* 100% of viewport height */
     position: absolute;
+    align-items: center;
+    justify-content: center;
     top: 0;
     left: 0;
   }
   .content-container{
-    display: block;
+    display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
     background-color: white;
     height:100%;
     padding: 1%;
