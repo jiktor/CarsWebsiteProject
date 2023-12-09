@@ -1,16 +1,26 @@
 import { NgIf } from '@angular/common';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup,ReactiveFormsModule,ValidationErrors,ValidatorFn,Validators } from '@angular/forms';
+import { RegisterService } from '../Services/register.service';
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [ReactiveFormsModule,NgIf],
+  providers: [HttpClientModule, RegisterService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
   title ='Registartion form'
   reactiveForm: FormGroup;
+
+  
+
+  constructor(private httpClient: HttpClient,
+              private registerService: RegisterService){
+
+  }
 
   ngOnInit(){
     this.reactiveForm = new FormGroup({
@@ -23,8 +33,11 @@ export class RegisterComponent implements OnInit {
       validators: this.passwordMatchValdiator
     });
   }
-  onSubmit(){
-    console.log(this.reactiveForm)
+  onSubmit(user: {firstName:string,lastName:string,email:string,password:string}){
+    this.registerService.register(user)
+                        .subscribe((response)=>{
+                          console.log(response)
+                        })
   }
   //custom validation for whitespace
   noSpaceAllowed(control: FormControl){
@@ -40,4 +53,3 @@ export class RegisterComponent implements OnInit {
     ? null : {passwordMismatchError: true}
   }
 }
-

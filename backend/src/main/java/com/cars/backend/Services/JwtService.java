@@ -34,7 +34,7 @@ public class JwtService {
 	private Date extractExpiration(String token) {
 		return extractClaim(token, Claims :: getExpiration);
 	}
-//username === User.getEmail
+	//username === User.getEmail
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
 	}
