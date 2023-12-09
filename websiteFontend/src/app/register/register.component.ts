@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup,ReactiveFormsModule,Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup,ReactiveFormsModule,ValidationErrors,ValidatorFn,Validators } from '@angular/forms';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -18,10 +18,11 @@ export class RegisterComponent implements OnInit {
       lastName: new FormControl(null,[this.noSpaceAllowed,Validators.required]),
       email : new FormControl(null, [Validators.email,Validators.required]),
       password: new FormControl(null,Validators.required),
-      confirmPassword: new FormControl(null,Validators.required)
+      confirmPassword: new FormControl(null,[Validators.required])
+    },{
+      validators: this.passwordMatchValdiator
     });
   }
-
   onSubmit(){
     console.log(this.reactiveForm)
   }
@@ -32,13 +33,11 @@ export class RegisterComponent implements OnInit {
     }
     return null;
   }
-  //custom validation for matching passwords
-  // matchingPassword(control: FormControl){
-  //   //console.log(control.value)
-  //  // console.log((<FormGroup>this.reactiveForm).get('password').value)
-  //   if(!control.value != (<FormControl>this.reactiveForm.get('password')).value){
-  //     return {notMatchingPassword: true}
-  //   }
-  //   return null;
-  // }
+
+   //custom validation for matching passwords
+ passwordMatchValdiator (control: AbstractControl){
+    return control.get('password')?.value === control.get('confirmPassword')?.value
+    ? null : {passwordMismatchError: true}
+  }
 }
+

@@ -30,9 +30,9 @@
         <label for="cpassword">Confirm Password</label>
         <div>
             <small style="color: red;" *ngIf="reactiveForm.get('confirmPassword').errors?.['required'] && reactiveForm.get('confirmPassword').touched">The confirm password field is required</small>
-            <small style="color: red;" *ngIf="reactiveForm.get('confirmPassword').errors?.['notMatchingPassword'] && reactiveForm.get('confirmPassword').touched">The confirm password field is required</small>
+            <small style="color: red;" *ngIf="reactiveForm.errors?.['passwordMismatchError'] && reactiveForm.get('confirmPassword').touched">passwords dont match</small>
         </div>
-        <input type="password" id="cpassword" formControlName="confirmPassword" placeholder="Confirm your password">
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm your password">
 
         <input type="submit" value="Submit" id="btn">
     </form>
