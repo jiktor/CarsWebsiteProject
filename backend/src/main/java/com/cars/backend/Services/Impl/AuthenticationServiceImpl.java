@@ -3,6 +3,7 @@ package com.cars.backend.Services.Impl;
 import com.cars.backend.AuthenticationClasses.AuthenticationRequest;
 import com.cars.backend.AuthenticationClasses.AuthenticationResponse;
 import com.cars.backend.AuthenticationClasses.RegisterRequest;
+import com.cars.backend.Exceptions.ExceptionModels.EmailRegisteredException;
 import com.cars.backend.Models.Dao.Enums.Role;
 import com.cars.backend.Models.Dao.UserDao;
 import com.cars.backend.Repositories.UserRepository;
@@ -14,6 +15,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Optional;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -32,7 +36,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		this.authenticationManager = authenticationManager;
 	}
 	@Override
-	public AuthenticationResponse register(RegisterRequest request) {
+	public AuthenticationResponse register(RegisterRequest request) throws EmailRegisteredException {
+		if(userRepository.findByEmail(request.getEmail()).isPresent()){
+			throw new EmailRegisteredException("email "+request.getEmail()+" is already registered");
+		}
 		var user = UserDao.builder()
 				.firstName(request.getFirstName())
 				.secondName(request.getLastName())
