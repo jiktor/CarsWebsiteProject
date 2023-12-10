@@ -2,17 +2,17 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { JwtAuth } from "../Models/JwtAuth";
-import { RegisterModel } from "../Models/RegisterModel";
+import { LoginModel } from "../Models/LoginModel";
 
 @Injectable()
-export class RegisterService{
+export class LoginService{
 
     constructor(private httpClient: HttpClient){}
 
-    register(registerDto : RegisterModel): Observable<JwtAuth>{
+    login(LoginModel): Observable<JwtAuth>{
        return  this.httpClient
-                    .post<JwtAuth>('http://localhost:8080/cars-advert-website/authentication/register',
-                     registerDto);
+                    .post<JwtAuth>('http://localhost:8080/cars-advert-website/authentication/authenticate',
+                     LoginModel);
     }
 
 }

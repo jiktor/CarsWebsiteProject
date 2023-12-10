@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(EmailRegisteredException.class)
 	public ResponseEntity<Map<String, String>> handleEmailAlreadyRegistered(EmailRegisteredException e){
 		Map<String, String> errorResponse = new HashMap<>();
-		errorResponse.put("reason",e.getMessage());
+		errorResponse.put("message",e.getMessage());
 		return ResponseEntity.status(403).body(errorResponse);
 	}
 }
