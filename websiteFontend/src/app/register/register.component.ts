@@ -3,6 +3,8 @@ import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup,ReactiveFormsModule,ValidationErrors,ValidatorFn,Validators } from '@angular/forms';
 import { RegisterService } from '../Services/register.service';
+import { JwtAuth } from '../Models/JwtAuth';
+import { RegisterModel } from '../Models/RegisterModel';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -14,7 +16,7 @@ import { RegisterService } from '../Services/register.service';
 export class RegisterComponent implements OnInit {
   title ='Registartion form'
   reactiveForm: FormGroup;
-
+  jwtToken = new JwtAuth();
   
 
   constructor(private httpClient: HttpClient,
@@ -33,11 +35,8 @@ export class RegisterComponent implements OnInit {
       validators: this.passwordMatchValdiator
     });
   }
-  onSubmit(user: {firstName:string,lastName:string,email:string,password:string}){
-    this.registerService.register(user)
-                        .subscribe((response)=>{
-                          console.log(response)
-                        })
+  onSubmit(registerDto: RegisterModel){
+    this.Register(registerDto);            
   }
   //custom validation for whitespace
   noSpaceAllowed(control: FormControl){
@@ -51,5 +50,11 @@ export class RegisterComponent implements OnInit {
  passwordMatchValdiator (control: AbstractControl){
     return control.get('password')?.value === control.get('confirmPassword')?.value
     ? null : {passwordMismatchError: true}
+  }
+  Register(registerDto: RegisterModel){
+    this.registerService.register(registerDto).subscribe((jwtToken)=>{
+      localStorage.setItem('jwtToken', jwtToken.token);
+      console.log(localStorage.getItem('jwtToken'));
+   });
   }
 }
