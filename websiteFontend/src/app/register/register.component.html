@@ -1,6 +1,7 @@
 <div class="form">
     <h2 id="registration">Registration Form</h2>
     <form [formGroup]="reactiveForm" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm.value)">
+        <app-widget-error class = "error" *ngIf="err" [error]="err"></app-widget-error>
         <label for="fname">First name</label>
         <div>
             <small style="color: red;" *ngIf="reactiveForm.get('firstName').errors?.['noSpaceAllowed'] && reactiveForm.get('firstName').touched">whitespaces are not allowed in this field</small>

@@ -5,10 +5,11 @@ import { AbstractControl, FormControl, FormGroup,ReactiveFormsModule,ValidationE
 import { RegisterService } from '../Services/register.service';
 import { JwtAuth } from '../Models/JwtAuth';
 import { RegisterModel } from '../Models/RegisterModel';
+import { WidgetErrorComponent } from '../error-widget/error-widget.component';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule,NgIf],
+  imports: [ReactiveFormsModule,NgIf, WidgetErrorComponent],
   providers: [HttpClientModule, RegisterService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -17,10 +18,8 @@ export class RegisterComponent implements OnInit {
   title ='Registartion form'
   reactiveForm: FormGroup;
   jwtToken = new JwtAuth();
-  
-
-  constructor(private httpClient: HttpClient,
-              private registerService: RegisterService){
+  err : Error | null = null;
+  constructor(private registerService: RegisterService){
 
   }
 
@@ -36,7 +35,7 @@ export class RegisterComponent implements OnInit {
     });
   }
   onSubmit(registerDto: RegisterModel){
-    this.Register(registerDto);            
+      this.Register(registerDto);       
   }
   //custom validation for whitespace
   noSpaceAllowed(control: FormControl){
@@ -52,9 +51,11 @@ export class RegisterComponent implements OnInit {
     ? null : {passwordMismatchError: true}
   }
   Register(registerDto: RegisterModel){
-    this.registerService.register(registerDto).subscribe((jwtToken)=>{
-      localStorage.setItem('jwtToken', jwtToken.token);
-      console.log(localStorage.getItem('jwtToken'));
-   });
+        this.registerService.register(registerDto).subscribe((jwtToken)=>{
+          localStorage.setItem('jwtToken', jwtToken.token);
+          console.log(localStorage.getItem('jwtToken'));
+      },(error) =>{
+          this.err = error.error;
+      });
   }
 }
