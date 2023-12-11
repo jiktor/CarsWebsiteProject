@@ -16,4 +16,11 @@ public class GlobalExceptionHandler {
 		errorResponse.put("message",e.getMessage());
 		return ResponseEntity.status(403).body(errorResponse);
 	}
+
+	@ExceptionHandler(org.springframework.security.authentication.BadCredentialsException.class)
+	public ResponseEntity<Map<String,String>> handleBadCredentialsException(org.springframework.security.authentication.BadCredentialsException e){
+		Map <String, String> errorResponse = new HashMap<>();
+		errorResponse.put("message",e.getMessage());
+		return ResponseEntity.status(401).body(errorResponse);
+	}
 }
