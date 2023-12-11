@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit{
     this.loginService.login(loginDTO).subscribe((jwtToken) =>{
       localStorage.setItem('jwtToken',jwtToken.token);
       console.log(localStorage.getItem('jwtToken'))
+    },(error) => {
+      this.err = error.error;
     })
   }
 }
