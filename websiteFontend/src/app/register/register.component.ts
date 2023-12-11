@@ -6,6 +6,7 @@ import { RegisterService } from '../Services/register.service';
 import { JwtAuth } from '../Models/JwtAuth';
 import { RegisterModel } from '../Models/RegisterModel';
 import { WidgetErrorComponent } from '../error-widget/error-widget.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit {
   reactiveForm: FormGroup;
   jwtToken = new JwtAuth();
   err : Error | null = null;
-  constructor(private registerService: RegisterService){
+  constructor(private registerService: RegisterService,
+              private router: Router){
 
   }
 
@@ -35,7 +37,7 @@ export class RegisterComponent implements OnInit {
     });
   }
   onSubmit(registerDto: RegisterModel){
-      this.Register(registerDto);       
+      this.Register(registerDto);
   }
   //custom validation for whitespace
   noSpaceAllowed(control: FormControl){
@@ -44,7 +46,9 @@ export class RegisterComponent implements OnInit {
     }
     return null;
   }
-
+  ngDoCheck(){
+    if(localStorage?.getItem('jwtToken')) this.router.navigateByUrl('advert');
+  }
    //custom validation for matching passwords
  passwordMatchValdiator (control: AbstractControl){
     return control.get('password')?.value === control.get('confirmPassword')?.value

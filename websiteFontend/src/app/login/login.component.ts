@@ -6,6 +6,7 @@ import { JwtAuth } from '../Models/JwtAuth';
 import { WidgetErrorComponent } from '../error-widget/error-widget.component';
 import { LoginModel } from '../Models/LoginModel';
 import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit{
   jwtToken = new JwtAuth();
   err : Error | null = null;
 
-  constructor(private loginService: LoginService){}
+  constructor(private loginService: LoginService,
+              private router: Router){}
 
   ngOnInit(){
     this.loginForm = new FormGroup({
@@ -31,6 +33,10 @@ export class LoginComponent implements OnInit{
 
   onSubmit(loginDto: LoginModel){
     this.Login(loginDto);       
+  }
+
+  ngDoCheck(){
+    if(localStorage?.getItem('jwtToken')) this.router.navigateByUrl('advert');
   }
 
   Login(loginDTO: LoginModel){

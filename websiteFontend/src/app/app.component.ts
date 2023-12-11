@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink,RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink,RouterLinkActive, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,4 +12,22 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent {
   title = 'websiteFontend';
+  logged: boolean = false;
+
+  constructor(private router: Router){}
+
+  ngDoCheck(){
+    console.log("lyfecyclehook")
+    if(localStorage?.getItem('jwtToken')){
+      this.logged = true;
+    }else{
+      this.logged=false;
+    }
+  }
+
+  onLogout(){
+    localStorage.clear()
+    this.logged = false;
+    this.router.navigateByUrl('advert')
+  }
 }
