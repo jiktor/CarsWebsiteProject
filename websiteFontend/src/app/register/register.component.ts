@@ -56,8 +56,12 @@ export class RegisterComponent implements OnInit {
   }
   Register(registerDto: RegisterModel){
         this.registerService.register(registerDto).subscribe((jwtToken)=>{
+
           localStorage.setItem('jwtToken', jwtToken.token);
-          console.log(localStorage.getItem('jwtToken'));
+          localStorage.setItem('firstName',jwtToken.firstName);
+          localStorage.setItem('lastName',jwtToken.lastName);
+
+
       },(error) =>{
           this.err = error.error;
       });

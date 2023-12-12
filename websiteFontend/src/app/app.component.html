@@ -3,6 +3,7 @@
     <ul>
       <li class="leftButton"><a [routerLink]="['advert']" routerLinkActive="active" ariaCurrentWhenActive="page">Adverts</a></li>
       <li class="leftButton"><a [routerLink]="['createAdvert']" routerLinkActive="active" ariaCurrentWhenActive="page">Create adverts</a></li>
+      <li *ngIf="logged" class="rightButton nameButton">Logged in as: {{firstName}} {{lastName}}</li>
       <li *ngIf="!logged" class="rightButton"><a [routerLink]="['login']" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></li>
       <li *ngIf="!logged" class="rightButton"><a [routerLink]="['register']" routerLinkActive="active" ariaCurrentWhenActive="page">Register</a></li>
       <li (click)="onLogout()" *ngIf="logged" class="rightButton"><a  routerLinkActive="active" ariaCurrentWhenActive="page">Logout</a></li>

@@ -47,3 +47,10 @@ ul {
   li a:hover {
     background-color:midnightblue;
   }
+  .nameButton{
+    color: white;
+    display: block;
+    text-align: center;
+    padding: 20px 16px;
+    text-decoration: none;
+  }

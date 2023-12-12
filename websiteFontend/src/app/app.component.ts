@@ -13,18 +13,23 @@ import { RouterModule } from '@angular/router';
 export class AppComponent {
   title = 'websiteFontend';
   logged: boolean = false;
+  firstName = localStorage?.getItem('firstName');
+  lastName = localStorage?.getItem('lastName');
 
   constructor(private router: Router){}
 
   ngDoCheck(){
     console.log("lyfecyclehook")
+    this.firstName=localStorage?.getItem('firstName');
+    this.lastName=localStorage?.getItem('lastName');
+
     if(localStorage?.getItem('jwtToken')){
       this.logged = true;
     }else{
       this.logged=false;
     }
   }
-
+  
   onLogout(){
     localStorage.clear()
     this.logged = false;
