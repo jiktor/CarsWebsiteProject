@@ -52,6 +52,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return AuthenticationResponse
 				.builder()
 				.token(jwtToken)
+				.firstName(user.getFirstName())
+				.lastName(user.getSecondName())
 				.build();
 	}
 
@@ -69,6 +71,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return AuthenticationResponse
 				.builder()
 				.token(jwtToken)
+				.firstName(user.getFirstName())
+				.lastName(user.getSecondName())
 				.build();
 	}
 }
