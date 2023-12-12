@@ -48,7 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				.role(Role.USER)
 				.build();
 		userRepository.save(user);
-		var jwtToken = jwtService.generateToken(user);
+		var jwtToken = jwtService.generateToken(user,user.getFirstName(), user.getSecondName());
 		return AuthenticationResponse
 				.builder()
 				.token(jwtToken)
@@ -65,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		);
 		var user  = userRepository.findByEmail(request.getEmail())
 									.orElseThrow();
-		var jwtToken = jwtService.generateToken(user);
+		var jwtToken = jwtService.generateToken(user, user.getFirstName(), user.getSecondName());
 		return AuthenticationResponse
 				.builder()
 				.token(jwtToken)

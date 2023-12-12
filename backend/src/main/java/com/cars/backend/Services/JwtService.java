@@ -19,7 +19,6 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-
 	//private static final String secretKey = "5A7134743777397A24423646294A404E335266556A586E3272357538782F4125";
 	private static final String secretKey = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 	public boolean isTokenValid(String token, UserDetails userDetails){
@@ -39,7 +38,7 @@ public class JwtService {
 		return extractClaim(token, Claims::getSubject);
 	}
 	public String generateToken(
-			Map<String, Objects> extraClaims,
+			Map<String, Object> extraClaims,
 			UserDetails userDetails
 	){
 		return Jwts
@@ -52,8 +51,13 @@ public class JwtService {
 				.compact();
 	}
 
-	public String generateToken(UserDetails userDetails){
-		return generateToken(new HashMap<>(),userDetails);
+	public String generateToken(UserDetails userDetails,
+								String firstName,
+								String lastName){
+		return generateToken(new HashMap<>(){{
+			put("fistName",firstName);
+			put("lastName",lastName);
+		}},userDetails);
 	}
 
 	public<T> T extractClaim(String token, Function<Claims,T> claimsResolver){
