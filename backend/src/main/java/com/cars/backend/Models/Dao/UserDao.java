@@ -34,7 +34,12 @@ public class UserDao implements UserDetails {
 	private String firstName;
 	@Column
 	private String secondName;
+	@Column
+	@Enumerated(EnumType.STRING)
 	private Role role;
+	@Column
+	@OneToMany(mappedBy = "owner")
+	private List<CarAdvertsDao> carAdvertsList;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
