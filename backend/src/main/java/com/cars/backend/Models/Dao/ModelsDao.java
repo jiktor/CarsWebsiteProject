@@ -20,6 +20,7 @@ public class ModelsDao {
 	@Enumerated(EnumType.STRING)
 	private Models model;
 	@ManyToOne
+	@NonNull
 	@JoinColumn(referencedColumnName = "id")
 	private BrandsDao brand;
 	@OneToMany(mappedBy = "model")

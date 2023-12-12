@@ -1,6 +1,7 @@
 package com.cars.backend.Models.Dao;
 
 import jakarta.persistence.*;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class CarAdvertsDao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column
+	@NonNull
 	private float price;
 	@Column
 	private String engine;
@@ -20,6 +22,7 @@ public class CarAdvertsDao {
 	@Column(name = "image_data", nullable = false)
 	private List<byte[]> imageData;
 	@ManyToOne
+	@NonNull
 	@JoinColumn(referencedColumnName = "id")
 	private ModelsDao model;
 	@ManyToOne
