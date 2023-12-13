@@ -3,6 +3,7 @@ package com.cars.backend.Models.Dao;
 import jakarta.persistence.*;
 import org.springframework.lang.NonNull;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,8 @@ public class CarAdvertsDao {
 	@Lob
 	@Column(name = "description", columnDefinition = "TEXT")
 	private String description;
+	@Column
+	private Date dateOfManufacturing;
 	@Lob
 	@Column(name = "image_data", nullable = false)
 	private List<byte[]> imageData;

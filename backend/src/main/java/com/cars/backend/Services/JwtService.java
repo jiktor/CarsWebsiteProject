@@ -1,5 +1,6 @@
 package com.cars.backend.Services;
 
+import com.cars.backend.Models.Dao.Enums.Brands;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
