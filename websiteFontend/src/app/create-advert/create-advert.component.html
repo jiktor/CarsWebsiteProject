@@ -1,1 +1,53 @@
-<p>create-advert works!</p>
+
+<form   [formGroup]="createAdvertForm"
+        (ngSubmit)="onSubmit(createAdvertForm.value)">
+        <div class="headerContaienr">
+            <h1>Create advert</h1>
+        </div>
+
+        <div class="gridRowTwo gridColumnone">
+            <label>Pictures</label>
+            <input type="file" accept="image/*"/>
+        </div>
+
+        <div class="gridRowTwo gridColumnTwo">
+            <label>Brand*</label>
+            <select name="fruit" formControlName="brand">
+                <option value="apple">Apple</option>
+                <option value="banana">Banana</option>
+                <option value="orange">Orange</option>
+            </select>
+        </div>
+
+        <div class="gridRowThree gridColumnTwo">
+            <label >Model*</label>
+            <select  id="fruit" name="fruit" formControlName="model">
+                <option value="apple">Apple</option>
+                <option value="banana">Banana</option>
+                <option value="orange">Orange</option>
+            </select>
+        </div>
+
+        <div class="gridRowThree gridColumnone">
+        <label>Engine*</label>
+        <input type="text" formControlName="engine">
+        </div>
+
+        <div class="gridRowFour gridColumnone">
+            <label>Price*</label>
+            <input type="number" formControlName="price">
+        </div>
+
+        <div class="gridRowFour gridColumnTwo">
+            <label>Date of manufacturing*</label>
+            <input type="date" formControlName="date">
+        </div>
+
+        <div class="descriptionContainer">
+            <label>Description</label>
+            <textarea   formControlName="description"
+                        placeholder="Enter additional data"></textarea>
+        </div>
+
+        <input type="submit" value="Save" id="btn"/>
+</form>

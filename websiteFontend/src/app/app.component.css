@@ -26,7 +26,8 @@ ul {
   .outer-container{
     background-color: steelblue;
     width: 100dvw; /* 100% of viewport width */
-    height: 100dvh; /* 100% of viewport height */
+    height: 100vh; /* 100% of viewport height */
+    overflow-y: hidden;
     position: absolute;
     align-items: center;
     justify-content: center;
@@ -36,6 +37,7 @@ ul {
   .content-container{
     display: flex;
     align-items: center;
+    overflow-y:hidden;
     justify-content: center;
     margin-left: 10%;
     margin-right: 10%;

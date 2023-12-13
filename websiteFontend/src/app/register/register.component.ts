@@ -54,6 +54,7 @@ export class RegisterComponent implements OnInit {
     return control.get('password')?.value === control.get('confirmPassword')?.value
     ? null : {passwordMismatchError: true}
   }
+  
   Register(registerDto: RegisterModel){
         this.registerService.register(registerDto).subscribe((jwtToken)=>{
 
