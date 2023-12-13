@@ -33,6 +33,6 @@ export class AppComponent {
   onLogout(){
     localStorage.clear()
     this.logged = false;
-    this.router.navigateByUrl('advert')
+    this.router.navigateByUrl('cars-advert-website/advert')
   }
 }

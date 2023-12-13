@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cars-advert-website/createAdvert")
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200/cars-advert-website/createAdvert")
 public class CarAdvertsController {
 	private CarAdvertsService carAdvertsService;
 	@Autowired

@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit{
   }
 
   ngDoCheck(){
-    if(localStorage?.getItem('jwtToken')) this.router.navigateByUrl('advert');
+    if(localStorage?.getItem('jwtToken')) this.router.navigateByUrl('cars-advert-website/advert');
   }
 
   Login(loginDTO: LoginModel){

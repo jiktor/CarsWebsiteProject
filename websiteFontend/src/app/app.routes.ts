@@ -6,9 +6,9 @@ import { RegisterComponent } from './register/register.component';
 import { CreateAdvertComponent } from './create-advert/create-advert.component';
 
 export const routes: Routes = [
-    {path: 'login', component: LoginComponent},
-    {path: 'advert', component: AdvertComponent},
-    {path: 'register', component: RegisterComponent},
-    {path:'createAdvert', component: CreateAdvertComponent},
+    {path: 'cars-advert-website/login', component: LoginComponent},
+    {path: 'cars-advert-website/advert', component: AdvertComponent},
+    {path: 'cars-advert-website/register', component: RegisterComponent},
+    {path:'cars-advert-website/createAdvert', component: CreateAdvertComponent},
     {path: '**', component: ErrorPageComponent}
 ];
