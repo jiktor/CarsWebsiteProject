@@ -28,10 +28,10 @@ public class CarAdvertsController {
 	public ResponseEntity<List<Brands>> getBrands(){
 		return ResponseEntity.ok(carAdvertsService.getBrands());
 	}
-	@GetMapping("/getModels")
+	@GetMapping("/getModels/{brand}")
 	public ResponseEntity<List<Models>>getModels(
-			@RequestBody CarAdvertDto carAdvertDto
+			@PathVariable String brand
 			){
-		return ResponseEntity.ok(modelsService.getModelsByBrand(Brands.valueOf(carAdvertDto.getBrand())));
+		return ResponseEntity.ok(modelsService.getModelsByBrand(Brands.valueOf(brand)));
 	}
 }

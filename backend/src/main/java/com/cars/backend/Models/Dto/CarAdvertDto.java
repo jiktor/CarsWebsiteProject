@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarAdvertDto {
-	String model;
-	String brand;
+	private String model;
+	private String brand;
+
+	private float price;
+	private String description;
+	private String engine;
 }
