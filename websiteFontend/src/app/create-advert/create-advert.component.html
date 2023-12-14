@@ -12,17 +12,15 @@
 
         <div class="gridRowTwo gridColumnTwo">
             <label>Brand*</label>
-            <select name="fruit" formControlName="brand">
-                    <option *ngFor="let brand of brands" value="{{brand}}">{{brand}}></option>
+            <select (change)="onBrandSelect()" name="fruit" formControlName="brand">
+                    <option *ngFor="let brand of brands" value="{{brand}}">{{brand}}</option>
             </select>
         </div>
 
         <div class="gridRowThree gridColumnTwo">
             <label >Model*</label>
             <select  id="fruit" name="fruit" formControlName="model">
-                <option value="apple">Apple</option>
-                <option value="banana">Banana</option>
-                <option value="orange">Orange</option>
+                <option *ngFor="let model of models" value="{{model}}">{{model}}</option>
             </select>
         </div>
 

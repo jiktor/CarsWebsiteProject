@@ -9,12 +9,13 @@ export class CreateAdvertService{
 
     getBrands(): Observable<string[]>{
 
-        const headers = new HttpHeaders({
-            'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
-          });
-          console.log('headr sent from service'+headers)
-        return this.httpClient
-                    .get<string[]>('http://localhost:8080/cars-advert-website/createAdvert/getBrands',
+      const headers = new HttpHeaders({
+          'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+        });
+      console.log('headr sent from service'+headers)
+
+      return this.httpClient
+                  .get<string[]>('http://localhost:8080/cars-advert-website/createAdvert/getBrands',
                                     {headers});
     }
     
