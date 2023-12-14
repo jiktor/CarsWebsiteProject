@@ -21,8 +21,9 @@ public class CarAdvertsDao {
 	private String description;
 	@Column
 	private Date dateOfManufacturing;
+	//todo: pictures must be nullable=false
 	@Lob
-	@Column(name = "image_data", nullable = false)
+	@Column(name = "image_data")
 	private List<byte[]> imageData;
 	@ManyToOne
 	@NonNull

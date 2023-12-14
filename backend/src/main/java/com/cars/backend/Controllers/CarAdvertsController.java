@@ -34,4 +34,9 @@ public class CarAdvertsController {
 			){
 		return ResponseEntity.ok(modelsService.getModelsByBrand(Brands.valueOf(brand)));
 	}
+	@PostMapping("/save")
+	public ResponseEntity createAdvert(@RequestBody CarAdvertDto carAdvertDto){
+		carAdvertsService.saveCarAdvert(carAdvertDto);
+		return ResponseEntity.ok("success");
+	}
 }
