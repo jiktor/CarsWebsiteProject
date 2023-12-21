@@ -4,4 +4,5 @@ export class CreateAdvertModel{
     price: number;
     description: string = '';
     engine: string = '';
+    dateOfManufacturing: string ='';
 }

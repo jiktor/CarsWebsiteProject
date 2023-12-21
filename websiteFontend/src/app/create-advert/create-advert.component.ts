@@ -4,8 +4,9 @@ import { CreateAdvertModel } from '../Models/createAdvertModel';
 import { NgFor, NgIf } from '@angular/common';
 import { routes } from '../app.routes';
 import { Router } from '@angular/router';
-import { CreateAdvertService } from '../Services/createModel.service';
+import { CreateAdvertService } from '../Services/advertsService.service';
 import { ModelsService } from '../Services/models.services';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class CreateAdvertComponent {
     model: new FormControl(null,[Validators.required]),
     engine: new FormControl(null,[Validators.required]),
     price: new FormControl(null,[Validators.required]),
-    date: new FormControl(null,[Validators.required]),
+    dateOfManufacturing: new FormControl(null,[Validators.required]),
     description: new FormControl(null),
   })
   err: Error | null = null;
@@ -50,6 +51,7 @@ export class CreateAdvertComponent {
   onSubmit(createAdvertDto : CreateAdvertModel){
     //todo service.http.post(model)
     console.log(createAdvertDto);
+    this.createAdvert(createAdvertDto);
   }
 
     
@@ -74,4 +76,9 @@ onBrandSelect() {
                       });
   }
 
+  createAdvert(advertDto: CreateAdvertModel){
+      this.createAdvertService.createAdvert(advertDto).subscribe((response) =>{
+        console.log(response);
+      })
+  }
 }
