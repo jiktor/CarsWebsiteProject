@@ -13,4 +13,5 @@ import java.util.List;
 @Repository
 public interface ModelsRepository extends JpaRepository<ModelsDao,Long>{
 	public List<ModelsDao> getModelsByBrand(BrandsDao brandsDao);
+	public ModelsDao getModelsByModel(Models models);
 }

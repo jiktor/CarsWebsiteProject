@@ -31,4 +31,9 @@ public class ModelsServiceImpl implements ModelsService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public ModelsDao getModelsByModel(Models models) {
+		return modelsRepository.getModelsByModel(models);
+	}
+
 }

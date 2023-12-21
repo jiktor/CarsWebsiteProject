@@ -6,8 +6,10 @@ import com.cars.backend.Models.Dto.CarAdvertDto;
 import com.cars.backend.Services.CarAdvertsService;
 import com.cars.backend.Services.Impl.ModelsServiceImpl;
 import com.cars.backend.Services.ModelsService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -35,8 +37,9 @@ public class CarAdvertsController {
 		return ResponseEntity.ok(modelsService.getModelsByBrand(Brands.valueOf(brand)));
 	}
 	@PostMapping("/save")
-	public ResponseEntity createAdvert(@RequestBody CarAdvertDto carAdvertDto){
-		carAdvertsService.saveCarAdvert(carAdvertDto);
+	public ResponseEntity createAdvert(@RequestBody CarAdvertDto carAdvertDto,
+									   @NonNull HttpServletRequest request){
+		carAdvertsService.saveCarAdvert(carAdvertDto,request);
 		return ResponseEntity.ok("success");
 	}
 }
