@@ -52,6 +52,8 @@ export class CreateAdvertComponent {
     //todo service.http.post(model)
     console.log(createAdvertDto);
     this.createAdvert(createAdvertDto);
+    alert("success");
+    this.router.navigateByUrl('cars-advert-website/advert')
   }
 
     
