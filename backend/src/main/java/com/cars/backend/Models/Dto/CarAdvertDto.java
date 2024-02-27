@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class CarAdvertDto {
 	private String model;
@@ -19,17 +21,28 @@ public class CarAdvertDto {
 	private float price;
 	private String description;
 	private String engine;
+	private List<byte[]> images;
 
 	public CarAdvertDto() {
 	}
 
-	public CarAdvertDto(String model, String brand, float price, String description, String engine, Date dateOfManufacturing) {
+	public CarAdvertDto(String model, String brand, Date dateOfManufacturing, float price, String description, String engine, List<byte[]> images) {
 		this.model = model;
 		this.brand = brand;
+		this.dateOfManufacturing = dateOfManufacturing;
 		this.price = price;
 		this.description = description;
 		this.engine = engine;
-		this.dateOfManufacturing = dateOfManufacturing;
+		this.images = images;
+	}
+
+	public List<byte[]> getImages() {
+		return images;
+	}
+
+	public CarAdvertDto setImages(List<byte[]> images) {
+		this.images = images;
+		return this;
 	}
 
 	public String getModel() {

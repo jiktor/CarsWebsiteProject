@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, AbstractControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormControl, FormGroup, AbstractControl, ReactiveFormsModule, Validators, FormArray} from '@angular/forms';
 import { CreateAdvertModel } from '../Models/createAdvertModel';
 import { NgFor, NgIf } from '@angular/common';
 import { routes } from '../app.routes';
@@ -27,6 +27,9 @@ export class CreateAdvertComponent {
     price: new FormControl(null,[Validators.required]),
     dateOfManufacturing: new FormControl(null,[Validators.required]),
     description: new FormControl(null),
+    images: new FormArray([
+      new FormControl(null,Validators.required)
+    ]),
   })
   err: Error | null = null;
   brands: string[];
@@ -82,5 +85,23 @@ onBrandSelect() {
       this.createAdvertService.createAdvert(advertDto).subscribe((response) =>{
         console.log(response);
       })
+  }
+  addAnotherImage(){
+    (<FormArray>this.createAdvertForm.get('images')).push(new FormControl(null,Validators.required))
+  }
+  deleteImageInput(i: number){
+    (<FormArray>this.createAdvertForm.get('images')).removeAt(i);
+  }
+
+  onFileSelected(event: any, index: number): void {
+    const file: File = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const byteArray = new Uint8Array(reader.result as ArrayBuffer);
+      (<FormArray>this.createAdvertForm.get('images')).at(index).setValue(byteArray);
+    };
+
+    reader.readAsArrayBuffer(file);
   }
 }

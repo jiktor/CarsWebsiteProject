@@ -5,15 +5,29 @@
             <h1>Create advert</h1>
         </div>
 
-        <div class="gridRowTwo gridColumnone">
+        <div class="gridRowTwo gridColumnone"
+            style="position: relative; top: 1px; right: 1px;">
             <label>Pictures</label>
-            <input type="file" accept="image/*"/>
+            <div formArrayName="images">
+                <ng-container *ngFor="let image of createAdvertForm.get('images')['controls']; index as i">
+                    <span style="display: flex;
+                                 border: 2px solid; 
+                                 padding: 1px ;
+                                 margin: 1px; 
+                                 border-color: black;
+                                 width: 100%;">
+                        <input type="file" class="form-control-file" (change)="onFileSelected($event, i)"  accept="image/*" formControlName="{{i}}"/>
+                        <button type="button" (click)="deleteImageInput(i)" style="background-color: red;">delete</button>
+                    </span>
+                </ng-container>
+            </div>
+            <button type="button" (click)="addAnotherImage()">Add another image</button>
         </div>
 
         <div class="gridRowTwo gridColumnTwo">
             <label>Brand*</label>
             <select (change)="onBrandSelect()" name="fruit" formControlName="brand">
-                    <option *ngFor="let brand of brands" value="{{brand}}">{{brand}}</option>
+                <option *ngFor="let brand of brands" value="{{brand}}">{{brand}}</option>
             </select>
         </div>
 
@@ -44,6 +58,5 @@
             <textarea   formControlName="description"
                         placeholder="Enter additional data"></textarea>
         </div>
-
         <input type="submit" value="Save" id="btn"/>
 </form>
