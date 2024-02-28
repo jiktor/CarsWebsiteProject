@@ -43,6 +43,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		carAdvertsDao.setDescription(advertDto.getDescription());
 		carAdvertsDao.setModel(modelsService.getModelsByModel(Models.valueOf(advertDto.getModel())));
 		carAdvertsDao.setOwner(usreService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7))));
+		carAdvertsDao.setImageData(advertDto.getImages());
 		carAdvertsRepository.save(carAdvertsDao);
 	}
 }

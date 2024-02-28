@@ -23,7 +23,7 @@ public class CarAdvertsDao {
 	private Date dateOfManufacturing;
 	//todo: pictures must be nullable=false
 	@Lob
-	@Column(name = "image_data")
+	@Column(name = "image_data", columnDefinition = "LONGBLOB")
 	private List<byte[]> imageData;
 	@ManyToOne
 	@NonNull

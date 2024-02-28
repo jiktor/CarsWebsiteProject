@@ -31,5 +31,17 @@ export class CreateAdvertService{
                   advertDto,
                    {headers});
   }
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+  createAdvertFormData(advertDto : FormData): Observable<HttpClient>{
+
+    const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+      });
+      
+   return  this.httpClient
+                .post<HttpClient>('http://localhost:8080/cars-advert-website/createAdvert/save',
+                advertDto,
+                 {headers});
+}
     
 }

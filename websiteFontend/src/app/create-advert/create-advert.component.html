@@ -16,47 +16,47 @@
                                  margin: 1px; 
                                  border-color: black;
                                  width: 100%;">
-                        <input type="file" class="form-control-file" (change)="onFileSelected($event, i)"  accept="image/*" formControlName="{{i}}"/>
-                        <button type="button" (click)="deleteImageInput(i)" style="background-color: red;">delete</button>
+                        <input type="file" multiple class="form-control-file" (change)="onFileSelected($event)"  accept="image/*" formControlName="{{i}}"/>
+<!--                        <button type="button" (click)="deleteImageInput(i)" style="background-color: red;">delete</button> -->
                     </span>
                 </ng-container>
             </div>
-            <button type="button" (click)="addAnotherImage()">Add another image</button>
+            <!-- <button type="button" (click)="addAnotherImage()">Add another image</button> -->
         </div>
 
         <div class="gridRowTwo gridColumnTwo">
             <label>Brand*</label>
-            <select (change)="onBrandSelect()" name="fruit" formControlName="brand">
+            <select (change)="onBrandSelect()" name="fruit" formControlName="brand" [(ngModel)]="formData.brand">
                 <option *ngFor="let brand of brands" value="{{brand}}">{{brand}}</option>
             </select>
         </div>
 
         <div class="gridRowThree gridColumnTwo">
             <label >Model*</label>
-            <select  id="fruit" name="fruit" formControlName="model">
+            <select  id="fruit" name="fruit" formControlName="model" [(ngModel)]="formData.model">
                 <option *ngFor="let model of models" value="{{model}}">{{model}}</option>
             </select>
         </div>
 
         <div class="gridRowThree gridColumnone">
         <label>Engine*</label>
-        <input type="text" formControlName="engine">
+        <input type="text" formControlName="engine" [(ngModel)]="formData.engine">
         </div>
 
         <div class="gridRowFour gridColumnone">
             <label>Price*</label>
-            <input type="number" formControlName="price" min="0" pattern="\d+">
+            <input type="number" formControlName="price" min="0" pattern="\d+" [(ngModel)]="formData.price">
         </div>
 
         <div class="gridRowFour gridColumnTwo">
             <label>Date of manufacturing*</label>
-            <input type="date" formControlName="dateOfManufacturing">
+            <input type="date" formControlName="dateOfManufacturing" [(ngModel)]="formData.dateOfManufacturing">
         </div>
 
         <div class="descriptionContainer">
             <label>Description</label>
             <textarea   formControlName="description"
-                        placeholder="Enter additional data"></textarea>
+                        placeholder="Enter additional data" [(ngModel)]="formData.description"></textarea>
         </div>
         <input type="submit" value="Save" id="btn"/>
 </form>

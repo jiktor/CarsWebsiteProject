@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, AbstractControl, ReactiveFormsModule, Validators, FormArray} from '@angular/forms';
 import { CreateAdvertModel } from '../Models/createAdvertModel';
 import { NgFor, NgIf } from '@angular/common';
@@ -18,7 +18,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
   styleUrl: './create-advert.component.css'
 })
 export class CreateAdvertComponent {
-
+  formData: any = {};
+  selectedFiles: File[] = [];
 
   createAdvertForm: FormGroup = new FormGroup({
     brand: new FormControl(null,[Validators.required]),
@@ -35,6 +36,7 @@ export class CreateAdvertComponent {
   brands: string[];
   models: string[];
   prevBrand: string;
+  http: any;
 
 
   constructor(private router: Router,
@@ -52,11 +54,15 @@ export class CreateAdvertComponent {
   }
 
   onSubmit(createAdvertDto : CreateAdvertModel){
-    //todo service.http.post(model)
-    console.log(createAdvertDto);
-    this.createAdvert(createAdvertDto);
-    alert("success");
-    this.router.navigateByUrl('cars-advert-website/advert')
+    const formData = new FormData();
+    for (const key of Object.keys(this.formData)) {
+      formData.append(key, this.formData[key]);
+    }
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      formData.append('images', this.selectedFiles[i]);
+    }
+
+    this.createAdvertService.createAdvertFormData(formData).subscribe()
   }
 
     
@@ -86,22 +92,18 @@ onBrandSelect() {
         console.log(response);
       })
   }
-  addAnotherImage(){
-    (<FormArray>this.createAdvertForm.get('images')).push(new FormControl(null,Validators.required))
-  }
-  deleteImageInput(i: number){
-    (<FormArray>this.createAdvertForm.get('images')).removeAt(i);
-  }
+  
+  // addAnotherImage(){
+  //   (<FormArray>this.createAdvertForm.get('images')).push(new FormControl(null,Validators.required))
+  // }
+  // deleteImageInput(i: number){
+  //   (<FormArray>this.createAdvertForm.get('images')).removeAt(i);
+  // }
 
-  onFileSelected(event: any, index: number): void {
-    const file: File = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const byteArray = new Uint8Array(reader.result as ArrayBuffer);
-      (<FormArray>this.createAdvertForm.get('images')).at(index).setValue(byteArray);
-    };
-
-    reader.readAsArrayBuffer(file);
+  onFileSelected(event: any): void {
+    if(event.target.files){
+      console.log(event.target.files)
+      this.selectedFiles = event.target.files;
+    }
   }
 }
