@@ -5,4 +5,5 @@ export class CreateAdvertModel{
     description: string = '';
     engine: string = '';
     dateOfManufacturing: string ='';
+    images: Blob[] = [];
 }
