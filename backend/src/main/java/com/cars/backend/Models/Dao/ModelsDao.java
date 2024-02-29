@@ -19,7 +19,7 @@ public class ModelsDao {
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private Models model;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@NonNull
 	@JoinColumn(referencedColumnName = "id")
 	private BrandsDao brand;

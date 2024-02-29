@@ -5,6 +5,7 @@ import org.springframework.lang.NonNull;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class CarAdvertsDao {
@@ -22,9 +23,9 @@ public class CarAdvertsDao {
 	@Column
 	private Date dateOfManufacturing;
 	//todo: pictures must be nullable=false
-	@Lob
-	@Column(name = "image_data", columnDefinition = "LONGBLOB")
-	private List<byte[]> imageData;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(referencedColumnName = "id")
+	private Set<ImageDao> imageData;
 	@ManyToOne
 	@NonNull
 	@JoinColumn(referencedColumnName = "id")
@@ -36,7 +37,7 @@ public class CarAdvertsDao {
 	public CarAdvertsDao() {
 	}
 
-	public CarAdvertsDao(Long id, float price, String engine, String description, Date dateOfManufacturing, List<byte[]> imageData, @NonNull ModelsDao model, UserDao owner) {
+	public CarAdvertsDao(Long id, float price, String engine, String description, Date dateOfManufacturing, Set<ImageDao> imageData, @NonNull ModelsDao model, UserDao owner) {
 		this.id = id;
 		this.price = price;
 		this.engine = engine;
@@ -92,11 +93,11 @@ public class CarAdvertsDao {
 		return this;
 	}
 
-	public List<byte[]> getImageData() {
+	public Set<ImageDao> getImageData() {
 		return imageData;
 	}
 
-	public CarAdvertsDao setImageData(List<byte[]> imageData) {
+	public CarAdvertsDao setImageData(Set<ImageDao> imageData) {
 		this.imageData = imageData;
 		return this;
 	}

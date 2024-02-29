@@ -1,7 +1,7 @@
 <div class="outer-container">
   <nav>
     <ul>
-      <li class="leftButton"><a [routerLink]="['cars-advert-website/advert']" routerLinkActive="active" ariaCurrentWhenActive="page">Adverts</a></li>
+      <li class="leftButton"><a [routerLink]="['cars-advert-website/show-adverts']" routerLinkActive="active" ariaCurrentWhenActive="page">Adverts</a></li>
       <li class="leftButton"><a [routerLink]="['cars-advert-website/createAdvert']" routerLinkActive="active" ariaCurrentWhenActive="page">Create adverts</a></li>
       <li *ngIf="logged" class="rightButton nameButton">Logged in as: {{firstName}} {{lastName}}</li>
       <li *ngIf="!logged" class="rightButton"><a [routerLink]="['cars-advert-website/login']" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></li>
