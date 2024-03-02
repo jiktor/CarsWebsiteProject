@@ -4,11 +4,24 @@
         <p>show-adverts works!</p>
     </div>
     <div class="gridRowTwo mainContainer" style="background: green;">
-        <p>show-adverts works!</p>
-        <button (click)="showAds()">asd</button>
+        <div class="advert" style="height: 45vh;" *ngFor="let advert of adverts">
+            <div style="background: whitesmoke; border: 2px solid black;" class="advertInfo">
+                <div class="advert-image mainContainerColumnOne" >
+                    <img [src]="'data:image/png;base64,'+advert.images[0]" style="width: 400px; height: 300px;" alt="Img">
+                </div>
+                <div class="advertDescription mainContainerColumnTwo">
+                    <div class="brand" style="grid-row: 1;"><h1>{{ advert.brand }} {{advert.model}}</h1></div>
+                    <div class="description" style="grid-row-start: 2;grid-row-end: 4;">
+                        <span class="truncate-text">{{ advert.description }}</span>
+                    </div>
+                    <div class="price" style="grid-row: 4;">
+                        <strong style="float: right;">{{advert.price }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="gridRowThree navigationContainer" style="background: blue;">
-        <p>show-adverts works!</p>
-        
+        <p>show-adverts works!</p>  
     </div>
 </div>
