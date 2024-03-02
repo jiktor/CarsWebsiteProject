@@ -11,9 +11,12 @@ import com.cars.backend.Services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -79,6 +82,35 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 							.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
 			list.add(carAdvertDto);
 		}
+		return list;
+	}
+
+	@Override
+	public List<CarAdvertDto> getAdvertsWithPagination(int pageNumber, int pageSize) {
+		org.springframework.data.domain.Pageable pageable =PageRequest.of(pageNumber, pageSize);
+		Page<CarAdvertsDao> carAdvertsDaoPage = carAdvertsRepository.findAll(pageable);
+		List<CarAdvertsDao> carAdvertsDaoList = carAdvertsDaoPage.getContent();
+		//converting dao to dto object
+		List <CarAdvertDto> list = new ArrayList<>();
+		for(CarAdvertsDao carAdvertsDao : carAdvertsDaoList){
+			CarAdvertDto carAdvertDto = new CarAdvertDto();
+
+			Set<byte[]> imagesSet = new HashSet<>();
+			for(ImageDao image : carAdvertsDao.getImageData()){
+				imagesSet.add(image.getImage());
+			}
+
+			carAdvertDto
+					.setModel(carAdvertsDao.getModel().getModel().name())
+					.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
+					.setPrice(carAdvertsDao.getPrice())
+					.setDescription(carAdvertsDao.getDescription())
+					.setEngine(carAdvertsDao.getEngine())
+					.setImages(imagesSet)
+					.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
+			list.add(carAdvertDto);
+		}
+		//
 		return list;
 	}
 }

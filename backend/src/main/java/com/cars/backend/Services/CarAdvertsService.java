@@ -11,4 +11,5 @@ public interface CarAdvertsService {
 	public List<Brands> getBrands();
 	public void saveCarAdvert(CarAdvertDto advertDto,@NonNull HttpServletRequest request);
 	public List<CarAdvertDto> getAllAdverts();
+	public List<CarAdvertDto> getAdvertsWithPagination(int pageNumber, int pageSize);
 }

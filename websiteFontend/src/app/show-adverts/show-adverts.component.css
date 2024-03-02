@@ -27,7 +27,8 @@
    
 }
 .navigationContainer{
-    
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
 }
 .mainContainer{
     display: inline-block;
