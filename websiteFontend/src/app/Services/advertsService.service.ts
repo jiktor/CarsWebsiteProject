@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { CreateAdvertModel } from "../Models/createAdvertModel";
@@ -30,6 +30,23 @@ export class CreateAdvertService{
       return this.httpClient
                   .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/all',
                                     {headers});
+      
+    }
+
+    getAdvertsWithPagination(pageNumber: string, pageSize): Observable<CreateAdvertModel[]>{
+
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+      });
+      
+
+      const params = new HttpParams()
+      .set('pageNumber', pageNumber)
+      .set('pageSize', pageSize.toString());
+
+      return this.httpClient
+                  .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/getAdverts',
+                                    {headers,params});
       
     }
 

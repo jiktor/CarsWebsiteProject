@@ -3,7 +3,7 @@ import { CreateAdvertModel } from '../Models/createAdvertModel';
 import { CreateAdvertService } from '../Services/advertsService.service';
 import { Subscription } from 'rxjs';
 import { NgFor } from '@angular/common';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-show-adverts',
@@ -14,7 +14,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styleUrl: './show-adverts.component.css'
 })
 export class ShowAdvertsComponent {
-  divState = 'normal';
+  numberOfAdsPerPage = "3"
 
   ngOnInit(): void {
   }
@@ -29,12 +29,22 @@ export class ShowAdvertsComponent {
   constructor( private createAdvertService: CreateAdvertService){}
 
   async ngAfterViewInit(){
-    await this.getAllAdverts();
+   this.getAdvertsWithPagination();
   }
-  async getAllAdverts(){
-    this.subscription = this.createAdvertService.getAllAdverts().subscribe((data:CreateAdvertModel[])=>{
+
+  // async getAllAdverts(){
+  //   this.subscription = this.createAdvertService.getAllAdverts().subscribe((data:CreateAdvertModel[])=>{
+  //     this.adverts = data
+  //   });
+  // }
+
+  getAdvertsWithPagination(){
+    this.subscription = this.createAdvertService.getAdvertsWithPagination("1",this.numberOfAdsPerPage).subscribe((data:CreateAdvertModel[])=>{
       this.adverts = data
     });
+    this.adverts.forEach(ad => {
+      console.log(ad)
+    })
   }
 
   getImageUrl(blob: Blob): string {
@@ -50,5 +60,9 @@ export class ShowAdvertsComponent {
     }
     return "";
 }
+  onOptionSelect(event: Event){
+    this.numberOfAdsPerPage = (event.target as HTMLSelectElement).value; 
+    this.getAdvertsWithPagination();
+  }
 
 }

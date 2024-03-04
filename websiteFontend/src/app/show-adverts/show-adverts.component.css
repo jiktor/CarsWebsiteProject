@@ -24,7 +24,9 @@
     text-overflow: ellipsis;
 }
 .filterContainer{
-   
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
 }
 .navigationContainer{
     display: grid;
@@ -56,5 +58,37 @@ div{
     width:70vw;
     height:90dvh;
 }
+
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #2f27d3;
+
+    display: flex;
+    flex-direction: row; /* Display the items horizontally */
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center; /* Vertically center items */
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #21b4ce;
+  }
 
 

@@ -1,7 +1,9 @@
 
 <div class="firstContainer">
     <div class="gridRowOne filterContainer" style="background-color: red;">
-        <p>show-adverts works!</p>
+        <div style="grid-column: 1; grid-row: 1;">
+            
+        </div>
     </div>
     <div class="gridRowTwo mainContainer" style="background: green;">
         <div class="advert" style="height: 45vh;" *ngFor="let advert of adverts">
@@ -23,15 +25,38 @@
     </div>
     <div class="gridRowThree navigationContainer" style="background: blue;">
         <div style="grid-column: 1; text-align: center;">
-        <p>Nimber of adverts per page:</p>
-            <select id="dropdown" style="width: 50%; border-radius: 5px;">
-                <option value="option1" selected>3</option>
-                <option value="option2">6</option> <!-- Option 2 is pre-selected -->
-                <option value="option3">9</option>
+        <p>Number of adverts per page:</p>
+            <select  (change)="onOptionSelect($event)" style="width: 50%; border-radius: 5px;">
+                <option value="3" selected>3</option>
+                <option value="6">6</option> 
+                <option value="9">9</option>
             </select>  
         </div>
         <div style="grid-column-start: 2; grid-column-end: 3; text-align: center;">
-            Menu
+            <!-- -->
+
+        <nav th:fragment="navbar" style="width: 100%; "  class="navbar navbar-expand-lg navbar-light bg-danger">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav"  style="border-radius: 5px; border: 2px solid black;">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/home/1?pageNumber=1">First page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Previous page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Current page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Next page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Last page</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+            <!----> 
         </div>
     </div>
 </div>
