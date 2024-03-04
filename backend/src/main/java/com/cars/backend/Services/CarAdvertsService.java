@@ -12,4 +12,5 @@ public interface CarAdvertsService {
 	public void saveCarAdvert(CarAdvertDto advertDto,@NonNull HttpServletRequest request);
 	public List<CarAdvertDto> getAllAdverts();
 	public List<CarAdvertDto> getAdvertsWithPagination(int pageNumber, int pageSize);
+	public List<CarAdvertDto> getAdvertsWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder);
 }

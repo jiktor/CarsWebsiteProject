@@ -30,7 +30,15 @@ public class CarAdvertsController {
 	@GetMapping("/getAdverts")
 	public ResponseEntity<List<CarAdvertDto>> getAdvertsWithPagination(
 			@RequestParam(value = "pageNumber", defaultValue = "1",required = false) int pageNumber,
-			@RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize){
-		return ResponseEntity.ok(carAdvertsService.getAdvertsWithPagination(pageNumber,pageSize));
+			@RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize,
+			@RequestParam(value = "sortField",required = false) String sortField,
+			@RequestParam(value = "sortOrder", required = false) String sortOrder){
+		if(sortField == null && sortOrder == null ) {
+			return ResponseEntity.ok(carAdvertsService.getAdvertsWithPagination(pageNumber, pageSize));
+		} else if (sortField != null && sortOrder != null) {
+			// метод от сървис за сортиране
+			return ResponseEntity.ok(carAdvertsService.getAdvertsWithPaginationAndSorting(pageNumber, pageSize,sortField,sortOrder));
+		}
+			throw new RuntimeException("Exception in getting adverts with sorting");
 	}
 }
