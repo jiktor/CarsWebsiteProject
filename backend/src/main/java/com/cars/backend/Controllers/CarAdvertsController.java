@@ -29,16 +29,31 @@ public class CarAdvertsController {
 	}
 	@GetMapping("/getAdverts")
 	public ResponseEntity<List<CarAdvertDto>> getAdvertsWithPagination(
-			@RequestParam(value = "pageNumber", defaultValue = "1",required = false) int pageNumber,
+			@RequestParam(value = "pageNumber", defaultValue = "0",required = false) int pageNumber,
 			@RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize,
 			@RequestParam(value = "sortField",required = false) String sortField,
-			@RequestParam(value = "sortOrder", required = false) String sortOrder){
+			@RequestParam(value = "sortOrder", required = false) String sortOrder,
+			@RequestParam(value = "model",required = false) String model,
+			@RequestParam(value = "brand",required = false) String brand,
+			@RequestParam(value = "fromPrice",required = false) String fromPrice,
+			@RequestParam(value = "toPrice",required = false) String toPrice,
+			@RequestParam(value = "engine",required = false) String engine,
+			@RequestParam(value = "dateOfManufacturing",required = false) String dateOfManufacturing){
 		if(sortField == null && sortOrder == null ) {
 			return ResponseEntity.ok(carAdvertsService.getAdvertsWithPagination(pageNumber, pageSize));
-		} else if (sortField != null && sortOrder != null) {
+		} else{
+
 			// метод от сървис за сортиране
-			return ResponseEntity.ok(carAdvertsService.getAdvertsWithPaginationAndSorting(pageNumber, pageSize,sortField,sortOrder));
+			return ResponseEntity.ok(carAdvertsService.getAdvertsWithFiltrationAndPaginationAndSorting(
+					pageNumber,
+					pageSize,sortField,
+					sortOrder,
+					engine,
+					brand,
+					model,
+					dateOfManufacturing,
+					fromPrice,
+					toPrice));
 		}
-			throw new RuntimeException("Exception in getting adverts with sorting");
 	}
 }

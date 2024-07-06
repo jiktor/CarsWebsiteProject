@@ -1,8 +1,21 @@
 
 <div class="firstContainer">
     <div class="gridRowOne filterContainer" style="background-color: red;">
-        <div style="grid-column: 1; grid-row: 1;">
-            
+        <div class="vertical-container" style="grid-column: 1; grid-row: 1;">
+            <label>Brand*</label>
+            <select name="fruit" formControlName="brand" style="border-radius: 5px;" (change)="onBrandSelect($event)">
+                <option *ngFor="let brand of brands" value="{{brand}}">{{brand}}</option>
+            </select>
+        </div>
+        <div class="vertical-container" style="grid-column: 3; grid-row: 1;">
+            <label>SortBy</label>
+            <select style="border-radius: 5px;">
+                    <option value="" selected>Ascending price</option>
+                    <option value="desc">Descending price</option> 
+            </select>
+        </div>
+        <div style="grid-column: 3; grid-row: 3;">
+            <button style="border-radius: 5px; width: 100%;">apply</button>
         </div>
     </div>
     <div class="gridRowTwo mainContainer" style="background: green;">

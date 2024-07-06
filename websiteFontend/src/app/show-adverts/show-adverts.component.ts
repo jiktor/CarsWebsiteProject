@@ -4,6 +4,7 @@ import { CreateAdvertService } from '../Services/advertsService.service';
 import { Subscription } from 'rxjs';
 import { NgFor } from '@angular/common';
 import { NgModel } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-adverts',
@@ -15,18 +16,27 @@ import { NgModel } from '@angular/forms';
 })
 export class ShowAdvertsComponent {
   numberOfAdsPerPage = "3"
+  brands: string[];
+  selectedBrand: string = "";
+  adverts : CreateAdvertModel[];
+  subscription: Subscription;
 
   ngOnInit(): void {
+
+    if(!localStorage?.getItem('jwtToken')){
+      alert("You must be logged in to view Adverts");
+      this.router.navigateByUrl('login');
+   }
+
+    this.getBrands();
   }
 
   onAdvertClick(_t6: any) {
   throw new Error('Method not implemented.');
   }
 
-  adverts : CreateAdvertModel[];
-  subscription: Subscription;
-
-  constructor( private createAdvertService: CreateAdvertService){}
+  constructor( private createAdvertService: CreateAdvertService,
+                private router: Router){}
 
   async ngAfterViewInit(){
    this.getAdvertsWithPagination();
@@ -39,12 +49,9 @@ export class ShowAdvertsComponent {
   // }
 
   getAdvertsWithPagination(){
-    this.subscription = this.createAdvertService.getAdvertsWithPagination("1",this.numberOfAdsPerPage).subscribe((data:CreateAdvertModel[])=>{
+    this.subscription = this.createAdvertService.getAdvertsWithPagination("0",this.numberOfAdsPerPage).subscribe((data:CreateAdvertModel[])=>{
       this.adverts = data
     });
-    this.adverts.forEach(ad => {
-      console.log(ad)
-    })
   }
 
   getImageUrl(blob: Blob): string {
@@ -63,6 +70,16 @@ export class ShowAdvertsComponent {
   onOptionSelect(event: Event){
     this.numberOfAdsPerPage = (event.target as HTMLSelectElement).value; 
     this.getAdvertsWithPagination();
+  }
+  getBrands(){
+    return this.createAdvertService.getBrands().subscribe((data:string[])=>{
+      console.log(' brands data from service' + data)
+      this.brands = data
+    })
+  }
+  onBrandSelect(event: Event){
+    this.selectedBrand = (event.target as HTMLSelectElement).value;
+    console.log(this.selectedBrand)
   }
 
 }

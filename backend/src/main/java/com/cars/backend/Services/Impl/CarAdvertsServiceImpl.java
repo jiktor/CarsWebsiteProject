@@ -1,9 +1,11 @@
 package com.cars.backend.Services.Impl;
 
+import com.cars.backend.Models.Dao.BrandsDao;
 import com.cars.backend.Models.Dao.CarAdvertsDao;
 import com.cars.backend.Models.Dao.Enums.Brands;
 import com.cars.backend.Models.Dao.Enums.Models;
 import com.cars.backend.Models.Dao.ImageDao;
+import com.cars.backend.Models.Dao.ModelsDao;
 import com.cars.backend.Models.Dto.CarAdvertDto;
 import com.cars.backend.Repositories.CarAdvertsRepository;
 import com.cars.backend.Repositories.ImageRepository;
@@ -53,6 +55,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		carAdvertsDao.setModel(modelsService.getModelsByModel(Models.valueOf(advertDto.getModel())));
 		carAdvertsDao.setOwner(usreService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7))));
 		carAdvertsDao.setImageData(new HashSet<ImageDao>());
+		//TODO ако няма снимки гърми -> проверка зя NULL
 		for(byte [] dtoImage : advertDto.getImages()){
 			ImageDao imageDao = new ImageDao();
 			imageDao.setImage(dtoImage);
@@ -148,4 +151,114 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		//
 		return list;
 	}
+
+	//TODO to be deprecated to !!!!!
+	@Override
+	public List<CarAdvertDto> getAdvertsByEngineWithPaginationAndSorting(int pageNumber, int pageSize, String sortField, String sortOrder, String engine) {
+		Sort sort = Sort.by(sortField).ascending(); // or Sort.by(sortField).descending() for descending order
+		if ("desc".equals(sortOrder)) {
+			sort = sort.descending();
+		}
+		org.springframework.data.domain.Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+		Page<CarAdvertsDao> carAdvertsDaoPage = carAdvertsRepository.findByEngine(engine,pageable);
+		List<CarAdvertsDao> carAdvertsDaoList = carAdvertsDaoPage.getContent();
+		//converting dao to dto object
+		List <CarAdvertDto> list = new ArrayList<>();
+		for(CarAdvertsDao carAdvertsDao : carAdvertsDaoList){
+			CarAdvertDto carAdvertDto = new CarAdvertDto();
+
+			Set<byte[]> imagesSet = new HashSet<>();
+			for(ImageDao image : carAdvertsDao.getImageData()){
+				imagesSet.add(image.getImage());
+			}
+
+			carAdvertDto
+					.setModel(carAdvertsDao.getModel().getModel().name())
+					.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
+					.setPrice(carAdvertsDao.getPrice())
+					.setDescription(carAdvertsDao.getDescription())
+					.setEngine(carAdvertsDao.getEngine())
+//					.setImages(imagesSet)
+					.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
+			list.add(carAdvertDto);
+		}
+		//
+		return list;
+	}
+	//!!!!!
+	@Override
+	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
+																			  int pageSize,
+																			  String sortField,
+																			  String sortOrder,
+																			  String engine,
+																			  String brand,
+																			  String model,
+																			  String dateOfManufacturing,
+																			  String fromPrice,
+																			  String toPrice
+																			  ) {
+		Sort sort = Sort.by(sortField).ascending(); // or Sort.by(sortField).descending() for descending order
+		if ("desc".equals(sortOrder)) {
+			sort = sort.descending();
+		}
+		org.springframework.data.domain.Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+		Long modelsDaoId = null;
+		if(model!=null){
+			modelsDaoId = modelsService.getModelsByModel(Models.valueOf(model)).getId();
+		}
+
+		Long brandsDaoId = null;
+		if(brand!=null){
+			brandsDaoId = brandsService.getBrandDaoByBrand(Brands.valueOf(brand)).getId();
+		}
+		Float fromPriceact = null;
+		if(fromPrice!=null){
+			fromPriceact = Float.valueOf(fromPrice);
+		}
+		Float toPriceact = null;
+		if(toPrice!=null){
+			toPriceact = Float.valueOf(toPrice);
+		}
+		Date dateManufacturing = null;
+		if(dateManufacturing != null){
+			dateManufacturing = new Date(dateOfManufacturing);
+		}
+		Page<CarAdvertsDao> carAdvertsDaoPage = carAdvertsRepository.findByDynamicParams(
+				modelsDaoId,
+				brandsDaoId,
+				fromPriceact,
+				toPriceact,
+				engine,
+				dateManufacturing,
+				pageable
+		);
+		List<CarAdvertsDao> carAdvertsDaoList = carAdvertsDaoPage.getContent();
+		//converting dao to dto object
+		List <CarAdvertDto> list = new ArrayList<>();
+		for(CarAdvertsDao carAdvertsDao : carAdvertsDaoList){
+			CarAdvertDto carAdvertDto = new CarAdvertDto();
+
+			Set<byte[]> imagesSet = new HashSet<>();
+			for(ImageDao image : carAdvertsDao.getImageData()){
+				imagesSet.add(image.getImage());
+			}
+
+			carAdvertDto
+					.setModel(carAdvertsDao.getModel().getModel().name())
+					.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
+					.setPrice(carAdvertsDao.getPrice())
+					.setDescription(carAdvertsDao.getDescription())
+					.setEngine(carAdvertsDao.getEngine())
+//					.setImages(imagesSet)
+					.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
+			list.add(carAdvertDto);
+		}
+		//
+		return list;
+	}
+
+
 }

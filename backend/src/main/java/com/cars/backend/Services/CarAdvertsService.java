@@ -13,4 +13,15 @@ public interface CarAdvertsService {
 	public List<CarAdvertDto> getAllAdverts();
 	public List<CarAdvertDto> getAdvertsWithPagination(int pageNumber, int pageSize);
 	public List<CarAdvertDto> getAdvertsWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder);
+	public List<CarAdvertDto> getAdvertsByEngineWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder,String engine);
+	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
+																			  int pageSize,
+																			  String sortField,
+																			  String sortOrder,
+																			  String engine,
+																			  String brand,
+																			  String model,
+																			  String dateOfManufacturing,
+																			  String fromPrice,
+																			  String toPrice);
 }

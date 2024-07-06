@@ -28,6 +28,10 @@
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
 }
+.vertical-container{
+ display: flex; 
+ flex-direction: column;
+}
 .navigationContainer{
     display: grid;
     grid-template-columns: repeat(3,1fr);
