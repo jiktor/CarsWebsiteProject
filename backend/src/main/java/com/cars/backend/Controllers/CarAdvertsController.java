@@ -27,6 +27,10 @@ public class CarAdvertsController {
 	public List<CarAdvertDto> getAllAdevrts(){
 		return carAdvertsService.getAllAdverts();
 	}
+	@GetMapping("/countPages")
+	public Long getCountNumberOfPagesAdverts(@RequestParam(value = "adsPerPage", required = true, defaultValue = "3") int adsPerPage){
+		return carAdvertsService.getAllAdvertsCount(adsPerPage);
+	}
 	@GetMapping("/getAdverts")
 	public ResponseEntity<List<CarAdvertDto>> getAdvertsWithPagination(
 			@RequestParam(value = "pageNumber", defaultValue = "0",required = false) int pageNumber,
@@ -39,14 +43,15 @@ public class CarAdvertsController {
 			@RequestParam(value = "toPrice",required = false) String toPrice,
 			@RequestParam(value = "engine",required = false) String engine,
 			@RequestParam(value = "dateOfManufacturing",required = false) String dateOfManufacturing){
-		if(sortField == null && sortOrder == null ) {
-			return ResponseEntity.ok(carAdvertsService.getAdvertsWithPagination(pageNumber, pageSize));
-		} else{
+		//if(sortField == null && sortOrder == null ) {
+		//	return ResponseEntity.ok(carAdvertsService.getAdvertsWithPagination(pageNumber, pageSize));
+		//} else{
 
 			// метод от сървис за сортиране
 			return ResponseEntity.ok(carAdvertsService.getAdvertsWithFiltrationAndPaginationAndSorting(
 					pageNumber,
-					pageSize,sortField,
+					pageSize,
+					sortField,
 					sortOrder,
 					engine,
 					brand,
@@ -56,4 +61,4 @@ public class CarAdvertsController {
 					toPrice));
 		}
 	}
-}
+

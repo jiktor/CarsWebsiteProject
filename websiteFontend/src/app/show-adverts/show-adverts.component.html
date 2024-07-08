@@ -2,20 +2,36 @@
 <div class="firstContainer">
     <div class="gridRowOne filterContainer" style="background-color: red;">
         <div class="vertical-container" style="grid-column: 1; grid-row: 1;">
-            <label>Brand*</label>
+            <label>Brand</label>
             <select name="fruit" formControlName="brand" style="border-radius: 5px;" (change)="onBrandSelect($event)">
+                <option value="null">any</option>
                 <option *ngFor="let brand of brands" value="{{brand}}">{{brand}}</option>
             </select>
         </div>
+        <div class="vertical-container" style="grid-column: 1; grid-row: 2;">
+            <label>Model</label>
+            <select name="model" formControlName="model" style="border-radius: 5px;" (change)="onModelSelect($event)">
+                <option value="null">any</option>
+                <option *ngFor="let model of models" value="{{model}}">{{model}}</option>
+            </select>
+        </div>
         <div class="vertical-container" style="grid-column: 3; grid-row: 1;">
-            <label>SortBy</label>
-            <select style="border-radius: 5px;">
+            <label>Order by</label>
+            <select style="border-radius: 5px;" (change)="onOrderSelect($event)">
                     <option value="" selected>Ascending price</option>
                     <option value="desc">Descending price</option> 
             </select>
         </div>
+        <div class="vertical-container" style="grid-column: 2; grid-row: 1;">
+            <label>From price</label>
+            <input type="number" id="quantity" name="quantity" min="0" step="1" value="0" (input)="OnFromPriceSelect($event)">
+        </div>
+        <div class="vertical-container" style="grid-column: 2; grid-row: 2;">
+            <label>To price</label>
+            <input type="number" id="quantity" name="quantity" min="0" step="1" (input)="OnToPriceSelect($event)">
+        </div>
         <div style="grid-column: 3; grid-row: 3;">
-            <button style="border-radius: 5px; width: 100%;">apply</button>
+            <button style="border-radius: 5px; width: 100%;" (click)="applyFilter()">apply</button>
         </div>
     </div>
     <div class="gridRowTwo mainContainer" style="background: green;">

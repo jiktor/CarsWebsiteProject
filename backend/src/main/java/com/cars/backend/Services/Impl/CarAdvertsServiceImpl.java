@@ -43,6 +43,15 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		this.imageRepository = imageRepository;
 	}
 	@Override
+	public Long getAllAdvertsCount(int adsPerPage){
+		if(carAdvertsRepository.count() <= adsPerPage)
+			return 0L;
+		else if (carAdvertsRepository.count()%adsPerPage == 0)
+			return carAdvertsRepository.count()/adsPerPage-1;
+		else
+			return carAdvertsRepository.count()/adsPerPage;
+	}
+	@Override
 	public List<Brands> getBrands() {
 		return Arrays.stream(Brands.values()).toList();
 	}
@@ -202,24 +211,26 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		Sort sort = Sort.by(sortField).ascending(); // or Sort.by(sortField).descending() for descending order
 		if ("desc".equals(sortOrder)) {
 			sort = sort.descending();
+		}else{
+			sort = sort.ascending();
 		}
 		org.springframework.data.domain.Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
 		Long modelsDaoId = null;
-		if(model!=null){
+		if(model!=null && !model.equals("null")){
 			modelsDaoId = modelsService.getModelsByModel(Models.valueOf(model)).getId();
 		}
 
 		Long brandsDaoId = null;
-		if(brand!=null){
+		if(brand!=null && !brand.equals("null")){
 			brandsDaoId = brandsService.getBrandDaoByBrand(Brands.valueOf(brand)).getId();
 		}
 		Float fromPriceact = null;
-		if(fromPrice!=null){
+		if(fromPrice!=null && fromPrice != ""){
 			fromPriceact = Float.valueOf(fromPrice);
 		}
 		Float toPriceact = null;
-		if(toPrice!=null){
+		if(toPrice!=null && toPrice != ""){
 			toPriceact = Float.valueOf(toPrice);
 		}
 		Date dateManufacturing = null;
@@ -252,7 +263,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 					.setPrice(carAdvertsDao.getPrice())
 					.setDescription(carAdvertsDao.getDescription())
 					.setEngine(carAdvertsDao.getEngine())
-//					.setImages(imagesSet)
+					.setImages(imagesSet)
 					.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
 			list.add(carAdvertDto);
 		}

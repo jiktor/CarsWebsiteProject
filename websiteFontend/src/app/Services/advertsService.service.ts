@@ -42,12 +42,34 @@ export class CreateAdvertService{
 
       const params = new HttpParams()
       .set('pageNumber', pageNumber)
-      .set('pageSize', pageSize.toString());
+      .set('pageSize', pageSize.toString())
+      .set('sortField','price')
 
       return this.httpClient
                   .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/getAdverts',
                                     {headers,params});
       
+    }
+    getAdvertsWithPaginationAndFilter(pageNumber: string, pageSize: string, brand: string, model:string, orderSelect: string, toPrice: string, fromPrice: string): Observable<CreateAdvertModel[]>{
+
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+      });
+
+      const params = new HttpParams()
+      .set('pageNumber', pageNumber)
+      .set('pageSize', pageSize.toString())
+      .set('sortField','price')
+      .set('brand',brand)
+      .set('model',model)
+      .set('sortOrder', orderSelect)
+      .set('fromPrice', fromPrice)
+      .set('toPrice', toPrice);
+
+      return this.httpClient
+                  .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/getAdverts',
+                                    {headers,params});
+
     }
 
     createAdvert(advertDto : CreateAdvertModel): Observable<HttpClient>{
