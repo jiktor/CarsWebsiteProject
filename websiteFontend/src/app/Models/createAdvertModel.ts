@@ -1,4 +1,5 @@
 export class CreateAdvertModel{
+    id: string = '';
     brand: string = '';
     model: string = '';
     price: number;

@@ -95,5 +95,21 @@ export class CreateAdvertService{
                 advertDto,
                  {headers});
 }
+
+getPagesCount(adsPerPage: string): Observable<string>{
+
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+  });
+  console.log('headr sent from service'+headers)
+
+  const params = new HttpParams()
+      .set('adsPerPage', adsPerPage)
+
+  return this.httpClient
+              .get<string>('http://localhost:8080/cars-advert-website/viewAdverts/countPages',
+                                {headers,params});
+  
+}
     
 }

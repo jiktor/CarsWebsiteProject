@@ -258,6 +258,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 			}
 
 			carAdvertDto
+					.setId(carAdvertsDao.getId())
 					.setModel(carAdvertsDao.getModel().getModel().name())
 					.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
 					.setPrice(carAdvertsDao.getPrice())
@@ -269,6 +270,27 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		}
 		//
 		return list;
+	}
+
+	@Override
+	public Object getSingleAdvert(Long advertId) {
+		CarAdvertsDao carAdvertsDao = carAdvertsRepository.getReferenceById(advertId);
+
+		CarAdvertDto carAdvertDto = new CarAdvertDto();
+		carAdvertDto.setImages(new HashSet<>());
+		carAdvertDto
+				.setId(carAdvertsDao.getId())
+				.setBrand(carAdvertDto.getBrand())
+				.setModel(carAdvertsDao.getModel().getModel().name())
+				.setEngine(carAdvertsDao.getEngine())
+				.setDescription(carAdvertsDao.getDescription())
+				.setPrice(carAdvertsDao.getPrice())
+				.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing());
+
+		for(ImageDao image : carAdvertsDao.getImageData()){
+			carAdvertDto.getImages().add(image.getImage());
+		}
+		return carAdvertDto;
 	}
 
 

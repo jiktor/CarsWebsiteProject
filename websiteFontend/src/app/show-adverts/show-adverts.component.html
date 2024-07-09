@@ -36,7 +36,7 @@
     </div>
     <div class="gridRowTwo mainContainer" style="background: green;">
         <div class="advert" style="height: 45vh;" *ngFor="let advert of adverts">
-            <div style="background: whitesmoke; border: 2px solid black;" class="advertInfo">
+            <div style="background: whitesmoke; border: 2px solid black;" class="advertInfo div-clickable" (click)="onAdvertClicked(advert.id)">
                 <div class="advert-image mainContainerColumnOne" >
                     <img [src]="'data:image/png;base64,'+advert.images[0]" style="width: 400px; height: 300px;" alt="Img">
                 </div>
@@ -68,19 +68,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav"  style="border-radius: 5px; border: 2px solid black;">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/home/1?pageNumber=1">First page</a>
+                        <a class="nav-link" (click)="firstPageEvent()">First page</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">Previous page</a>
+                        <a class="nav-link" (click)="previousPageEvent()" >Previous page</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Current page</a>
+                        <a class="nav-link">{{currentPage}}/{{totalPages}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Next page</a>
+                        <a class="nav-link" (click)="nextPageEvent()">Next page</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Last page</a>
+                        <a class="nav-link" (click)="lastPageEvent()">Last page</a>
                     </li>
                 </ul>
             </div>

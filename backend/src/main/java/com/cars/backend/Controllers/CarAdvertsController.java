@@ -60,5 +60,11 @@ public class CarAdvertsController {
 					fromPrice,
 					toPrice));
 		}
+		@GetMapping("/getSingleAdvert")
+	public ResponseEntity<CarAdvertDto> getSingleAdvert(
+			@RequestParam(value = "advertId", required = true) Long advertId
+		){
+			return ResponseEntity.ok((CarAdvertDto) this.carAdvertsService.getSingleAdvert(advertId));
+		}
 	}
 

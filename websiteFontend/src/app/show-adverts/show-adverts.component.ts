@@ -17,12 +17,14 @@ import { Router } from '@angular/router';
 })
 export class ShowAdvertsComponent {
 
+  currentPage: number = 0;
   models: string[];
   numberOfAdsPerPage = "3"
   brands: string[];
   selectedBrand: string = "";
   adverts : CreateAdvertModel[];
   subscription: Subscription;
+  totalPages: string = "0";
   filterBrand: string = null;
   filterModel: string = null;
   filterOrderSelect: string = "";
@@ -37,6 +39,7 @@ export class ShowAdvertsComponent {
    }
 
     this.getBrands();
+    this.getNumberOfTotalPages();
   }
 
   onAdvertClick(_t6: any) {
@@ -51,12 +54,12 @@ export class ShowAdvertsComponent {
    this.getAdvertsWithPagination();
   }
 
-  // async getAllAdverts(){
-  //   this.subscription = this.createAdvertService.getAllAdverts().subscribe((data:CreateAdvertModel[])=>{
-  //     this.adverts = data
-  //   });
-  // }
-
+getNumberOfTotalPages(){
+  this.subscription = this.createAdvertService.getPagesCount(this.numberOfAdsPerPage).subscribe((data:string) => {
+    this.totalPages = data;
+    console.log("number of pages: " + this.totalPages);
+  });
+}
   getAdvertsWithPagination(){
     this.subscription = this.createAdvertService.getAdvertsWithPagination("0",this.numberOfAdsPerPage).subscribe((data:CreateAdvertModel[])=>{
       this.adverts = data
@@ -80,7 +83,8 @@ export class ShowAdvertsComponent {
 // }
   onOptionSelect(event: Event){
     this.numberOfAdsPerPage = (event.target as HTMLSelectElement).value; 
-    //this.getAdvertsWithPagination();
+    this.getNumberOfTotalPages();
+    this.getAdvertsWithPagination();
   }
   getBrands(){
     return this.createAdvertService.getBrands().subscribe((data:string[])=>{
@@ -130,7 +134,51 @@ export class ShowAdvertsComponent {
   applyFilter() {
     this.subscription = 
       this.createAdvertService.
-      getAdvertsWithPaginationAndFilter("0",this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+        this.adverts = data
+    });
+  }
+
+  onAdvertClicked(advretId: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  nextPageEvent() {
+    if(this.currentPage < parseInt(this.totalPages)){
+      this.currentPage++;
+
+      this.createAdvertService.
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+        this.adverts = data
+    });
+    }
+  }
+
+  previousPageEvent() {
+    if(this.currentPage > 0){
+      this.currentPage--;
+
+      this.createAdvertService.
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+        this.adverts = data
+    });
+    }
+  }
+
+  lastPageEvent() {
+    this.currentPage = parseInt(this.totalPages);
+
+    this.createAdvertService.
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+        this.adverts = data
+    });
+    }
+  
+  firstPageEvent() {
+    this.currentPage = 0;
+
+    this.createAdvertService.
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
         this.adverts = data
     });
   }

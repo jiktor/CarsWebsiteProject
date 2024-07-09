@@ -25,4 +25,6 @@ public interface CarAdvertsService {
 																			  String dateOfManufacturing,
 																			  String fromPrice,
 																			  String toPrice);
+
+	Object getSingleAdvert(Long advertId);
 }

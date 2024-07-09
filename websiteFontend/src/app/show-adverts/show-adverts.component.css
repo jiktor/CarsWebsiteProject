@@ -50,6 +50,14 @@
 div{
     padding: 5px;
 }
+.div-clickable:hover{
+    color: #1abfd1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.div-clickable{
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
 .firstContainer{
     height: 100vh;
     display: grid;
@@ -94,5 +102,7 @@ ul {
   li a:hover {
     background-color: #21b4ce;
   }
-
+  .nav-link:hover {
+    cursor: pointer;
+  }
 

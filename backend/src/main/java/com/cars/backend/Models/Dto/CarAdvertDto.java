@@ -14,6 +14,7 @@ import java.util.Set;
 
 @Data
 public class CarAdvertDto {
+	private Long id;
 	private String model;
 	private String brand;
 	@JsonFormat(pattern = "yyyy-mm-dd")
@@ -27,7 +28,8 @@ public class CarAdvertDto {
 	public CarAdvertDto() {
 	}
 
-	public CarAdvertDto(String model, String brand, Date dateOfManufacturing, float price, String description, String engine, Set<byte[]> images) {
+	public CarAdvertDto(String model, String brand, Date dateOfManufacturing, float price, String description, String engine, Set<byte[]> images, Long id) {
+		this.id = id;
 		this.model = model;
 		this.brand = brand;
 		this.dateOfManufacturing = dateOfManufacturing;
@@ -35,6 +37,15 @@ public class CarAdvertDto {
 		this.description = description;
 		this.engine = engine;
 		this.images = images;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public CarAdvertDto setId(Long id) {
+		this.id = id;
+		return this;
 	}
 
 	public Set<byte[]> getImages() {
