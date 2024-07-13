@@ -20,12 +20,25 @@ export class CreateAdvertService{
                                     {headers});
     }
 
+    getSingleAdvert(advertId): Observable<CreateAdvertModel>{
+
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+      });
+
+      const params = new HttpParams()
+      .set('advertId', advertId)
+
+      return this.httpClient.get<CreateAdvertModel>('http://localhost:8080/cars-advert-website/viewAdverts/getSingleAdvert',{headers,params});
+    }
+
     getAllAdverts(): Observable<CreateAdvertModel[]>{
 
       const headers = new HttpHeaders({
         'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
       });
       console.log('headr sent from service'+headers)
+      
 
       return this.httpClient
                   .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/all',

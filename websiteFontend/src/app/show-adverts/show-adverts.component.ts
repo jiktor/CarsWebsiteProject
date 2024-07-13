@@ -140,7 +140,7 @@ getNumberOfTotalPages(){
   }
 
   onAdvertClicked(advretId: string) {
-    throw new Error('Method not implemented.');
+    this.router.navigateByUrl('cars-advert-website/viewAdverts/getSingleAdvert/'+advretId);
   }
 
   nextPageEvent() {

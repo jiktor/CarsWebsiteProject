@@ -16,6 +16,12 @@
  display: grid;
  grid-template-rows: repeat(4,1fr);
 }
+.advert{
+    transition: all 1s ease-in-out;
+}
+.advert:hover{
+    color: aliceblue;
+}
 .truncate-text {
     display: block; /* Use block-level display */
     height: 150px;; /* Set the maximum height to limit the text */
@@ -24,6 +30,7 @@
     text-overflow: ellipsis;
 }
 .filterContainer{
+    background-color: steelblue;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
@@ -35,11 +42,13 @@
 .navigationContainer{
     display: grid;
     grid-template-columns: repeat(3,1fr);
+    background-color: steelblue;
 }
 .mainContainer{
     display: inline-block;
     height: auto;
     overflow-y: auto;
+    background-color: grey;
 }
 .mainContainerColumnOne{
     grid-column: 1;
@@ -105,4 +114,5 @@ ul {
   .nav-link:hover {
     cursor: pointer;
   }
+
 

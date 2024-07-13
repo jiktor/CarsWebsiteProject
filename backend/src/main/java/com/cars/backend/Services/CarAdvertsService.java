@@ -27,4 +27,6 @@ public interface CarAdvertsService {
 																			  String toPrice);
 
 	Object getSingleAdvert(Long advertId);
+
+	Object getOwnerByAdvert(Long advertId);
 }

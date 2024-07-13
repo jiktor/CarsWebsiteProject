@@ -1,6 +1,7 @@
 package com.cars.backend.Controllers;
 
 import com.cars.backend.Models.Dto.CarAdvertDto;
+import com.cars.backend.Models.Dto.UserDto;
 import com.cars.backend.Services.CarAdvertsService;
 import com.cars.backend.Services.ModelsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,11 @@ public class CarAdvertsController {
 		){
 			return ResponseEntity.ok((CarAdvertDto) this.carAdvertsService.getSingleAdvert(advertId));
 		}
+	@GetMapping("/getOwnerOfSingleAdvert")
+	public ResponseEntity<UserDto> getOwnerForAdvert(
+			@RequestParam(value = "advertId", required = true) Long advertId
+	){
+		return ResponseEntity.ok((UserDto) this.carAdvertsService.getOwnerByAdvert(advertId));
+	}
 	}
 

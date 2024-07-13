@@ -25,9 +25,9 @@ ul {
   }
   .outer-container{
     background-color: steelblue;
-    width: 100dvw; /* 100% of viewport width */
+    width: 100vw; /* 100% of viewport width */
     height: 100vh; /* 100% of viewport height */
-    overflow-y: hidden;
+    overflow-y: auto;
     position: absolute;
     align-items: center;
     justify-content: center;
@@ -38,13 +38,16 @@ ul {
     display: flex;
     align-items: center;
     overflow-y:hidden;
+    overflow-x: hidden;
     justify-content: center;
-    margin-left: 10%;
-    margin-right: 10%;
+    height: 100dvh;
+    margin-left: 5%;
+    margin-right: 5%;
     background-color: white;
-    height:100%;
-    padding: 1%;
+    height:fit-content;
     color: #000;
+    padding-top: 0.5%;
+    padding-bottom: 10%;
   }
   li a:hover {
     background-color:midnightblue;

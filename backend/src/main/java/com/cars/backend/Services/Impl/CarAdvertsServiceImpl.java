@@ -1,12 +1,10 @@
 package com.cars.backend.Services.Impl;
 
-import com.cars.backend.Models.Dao.BrandsDao;
-import com.cars.backend.Models.Dao.CarAdvertsDao;
+import com.cars.backend.Models.Dao.*;
 import com.cars.backend.Models.Dao.Enums.Brands;
 import com.cars.backend.Models.Dao.Enums.Models;
-import com.cars.backend.Models.Dao.ImageDao;
-import com.cars.backend.Models.Dao.ModelsDao;
 import com.cars.backend.Models.Dto.CarAdvertDto;
+import com.cars.backend.Models.Dto.UserDto;
 import com.cars.backend.Repositories.CarAdvertsRepository;
 import com.cars.backend.Repositories.ImageRepository;
 import com.cars.backend.Services.*;
@@ -280,7 +278,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		carAdvertDto.setImages(new HashSet<>());
 		carAdvertDto
 				.setId(carAdvertsDao.getId())
-				.setBrand(carAdvertDto.getBrand())
+				.setBrand(carAdvertsDao.getModel().getBrand().getBrand().toString())
 				.setModel(carAdvertsDao.getModel().getModel().name())
 				.setEngine(carAdvertsDao.getEngine())
 				.setDescription(carAdvertsDao.getDescription())
@@ -291,6 +289,19 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 			carAdvertDto.getImages().add(image.getImage());
 		}
 		return carAdvertDto;
+	}
+
+	@Override
+	public Object getOwnerByAdvert(Long advertId) {
+		CarAdvertsDao carAdvertsDao = this.carAdvertsRepository.getReferenceById(advertId);
+		UserDao userDao = carAdvertsDao.getOwner();
+		UserDto userDto =  new UserDto();
+
+		userDto
+				.setEmail(userDao.getEmail())
+				.setFirstName(userDao.getFirstName())
+				.setSecondName(userDao.getSecondName());
+		return userDto;
 	}
 
 

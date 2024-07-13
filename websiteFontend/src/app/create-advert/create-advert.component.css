@@ -23,10 +23,10 @@ form {
     padding: 2%;
     margin-top: 1%;
     margin-bottom: 2%;
-    resize: horizontal;
+    resize:none;
     width:70vw;
     overflow-y: scroll;
-    height:90dvh
+    height:90dvh;
 }
 
 label {
