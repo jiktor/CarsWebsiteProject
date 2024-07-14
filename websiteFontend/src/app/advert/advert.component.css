@@ -10,7 +10,15 @@
   width: 80vw;
   background-color:white;
 }
-
+.styled-paragraph {
+  font-size: 18px;             /* Sets the font size to 18 pixels */
+  color: #333;                 /* Sets the text color to a dark gray */
+  background-color: #f9f9f9;   /* Sets the background color to a light gray */
+  padding: 10px;               /* Adds 10 pixels of padding inside the paragraph */
+  border-radius: 5px;          /* Rounds the corners of the paragraph by 5 pixels */
+  border: 1px solid #ddd;      /* Adds a light gray border with a width of 1 pixel */
+  font-size: 12px;
+}
 
 .description-container {
   grid-row: 9 / span 5;

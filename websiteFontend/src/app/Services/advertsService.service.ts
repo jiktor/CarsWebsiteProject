@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { CreateAdvertModel } from "../Models/createAdvertModel";
+import { OwnerModel } from "../Models/OwnerModel";
 
 @Injectable()
 export class CreateAdvertService{
@@ -121,6 +122,21 @@ getPagesCount(adsPerPage: string): Observable<string>{
 
   return this.httpClient
               .get<string>('http://localhost:8080/cars-advert-website/viewAdverts/countPages',
+                                {headers,params});
+  
+}
+
+getAdvertismentOwner (advertId: number): Observable<OwnerModel>{
+
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+  });
+
+  const params = new HttpParams()
+      .set('advertId', advertId)
+
+  return this.httpClient
+              .get<OwnerModel>('http://localhost:8080/cars-advert-website/viewAdverts/getOwnerOfSingleAdvert',
                                 {headers,params});
   
 }

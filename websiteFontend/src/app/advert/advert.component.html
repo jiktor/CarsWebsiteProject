@@ -26,8 +26,8 @@
        
 
 
-    <div class="description-container" style="border: solid; border-color: black;overflow-y:auto;height: 100%; border-radius: 10px;">
-        <p style=" text-align: left; " >{{advert.description}}</p>
+    <div class="description-container" style="overflow-y:auto;height: 100%; border-radius: 10px;">
+        <p class="styled-paragraph" style=" text-align: left; " >{{advert.description}}</p>
     </div>
         <div class="table-container" style="text-align: left; width:100%;">
             <h3 style="text-align: center;">Key Characteristics</h3>
@@ -61,12 +61,12 @@
                     <td>{{advert.price}}</td>
                 </tr>
                 <tr>
-                    <td>owener name</td>
-                    <td>???</td>
+                    <td>owner name</td>
+                    <td>{{owner.firstName}} {{owner.secondName}}</td>
                 </tr>
                 <tr>
                     <td>Owner email</td>
-                    <td>???</td>
+                    <td>{{owner.email}}</td>
                 </tr>
             </tbody>
             </table>

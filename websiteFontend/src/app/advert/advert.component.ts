@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { CreateAdvertService } from '../Services/advertsService.service';
 import { CreateAdvertModel } from '../Models/createAdvertModel';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { OwnerModel } from '../Models/OwnerModel';
 @Component({
   selector: 'app-advert',
   standalone: true,
@@ -24,6 +25,7 @@ export class AdvertComponent {
     advert: CreateAdvertModel;
     advertHeading: string;
     isFullScreen = false;
+    owner: OwnerModel;
 
     constructor(private route: ActivatedRoute,
                 private advertsService: CreateAdvertService) 
@@ -35,7 +37,10 @@ export class AdvertComponent {
       // Perform additional logic if needed
       this.subscription = this.advertsService.getSingleAdvert(this.advertId).subscribe((data:CreateAdvertModel)=>{
         this.advert = data
-        console.log("@@@@@@@@@@" + this.advert.price);
+      });
+
+      this.subscription = this.advertsService.getAdvertismentOwner(this.advertId).subscribe((data:OwnerModel)=>{
+        this.owner = data
       });
     });
     console.log("the Id of the advert: "+this.advertId);
