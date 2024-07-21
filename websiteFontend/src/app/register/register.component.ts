@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     return null;
   }
   ngDoCheck(){
-    if(localStorage?.getItem('jwtToken')) this.router.navigateByUrl('cars-advert-website/advert');
+    if(localStorage?.getItem('jwtToken')) this.router.navigateByUrl('cars-advert-website/show-adverts');
   }
    //custom validation for matching passwords
  passwordMatchValdiator (control: AbstractControl){

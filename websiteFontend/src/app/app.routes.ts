@@ -12,6 +12,6 @@ export const routes: Routes = [
     {path: 'cars-advert-website/show-adverts', component: ShowAdvertsComponent},
     {path: 'cars-advert-website/register', component: RegisterComponent},
     {path:'cars-advert-website/createAdvert', component: CreateAdvertComponent},
-    {path:'cars-advert-website/viewAdverts/getSingleAdvert/:advertId', component: AdvertComponent},
-    {path: '**', component: ErrorPageComponent}
+    {path:'cars-advert-website/viewAdverts/getSingleAdvert/:advertId', component: AdvertComponent}
+   // {path: '**', component: ErrorPageComponent}
 ];

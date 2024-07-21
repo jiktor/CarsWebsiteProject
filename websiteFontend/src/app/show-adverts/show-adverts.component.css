@@ -22,6 +22,14 @@
 .advert:hover{
     color: aliceblue;
 }
+.search-button{
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    background-color: steelblue;
+}
+.search-button:hover{
+    background-color: white;
+    transform: scale(1.05);
+}
 .truncate-text {
     display: block; /* Use block-level display */
     height: 150px;; /* Set the maximum height to limit the text */

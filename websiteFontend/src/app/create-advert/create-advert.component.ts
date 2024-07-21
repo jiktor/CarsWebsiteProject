@@ -47,10 +47,11 @@ export class CreateAdvertComponent {
 
    if(!localStorage?.getItem('jwtToken')){
       alert("You must be logged in to create new advert");
-      this.router.navigateByUrl('login');
+      this.router.navigateByUrl('cars-advert-website/login');
    }
-
+   else{
     this.getBrands();
+   }
   }
 
   onSubmit(createAdvertDto : CreateAdvertModel){
@@ -62,7 +63,9 @@ export class CreateAdvertComponent {
       formData.append('images', this.selectedFiles[i]);
     }
 
-    this.createAdvertService.createAdvertFormData(formData).subscribe()
+    this.createAdvertService.createAdvertFormData(formData).subscribe();
+
+    this.router.navigateByUrl('cars-advert-website/show-adverts');
   }
 
     
@@ -77,14 +80,26 @@ onBrandSelect() {
     return this.createAdvertService.getBrands().subscribe((data:string[])=>{
       console.log(' brands data from service' + data)
       this.brands = data
-    })
+    },(error =>{
+      if(error.status === 403){
+        alert("Your credentials have expired");
+        localStorage.removeItem('jwtToken');
+        this.router.navigate(['cars-advert-website/login']);
+      }
+    }))
   }
 
   getModels(forBrand: string){
     this.modelService.getModels(this.createAdvertForm.get('brand').value)
                       .subscribe((data:string[])=>{
                         this.models = data 
-                      });
+                      },(error =>{
+                        if(error.status === 403){
+                          alert("Your credentials have expired");
+                          localStorage.removeItem('jwtToken');
+                          this.router.navigate(['cars-advert-website/login']);
+                        }
+                      }));
   }
 
   createAdvert(advertDto: CreateAdvertModel){

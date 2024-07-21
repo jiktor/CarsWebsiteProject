@@ -33,10 +33,10 @@ export class ShowAdvertsComponent {
 
   ngOnInit(): void {
 
-    if(!localStorage?.getItem('jwtToken')){
-      alert("You must be logged in to view Adverts");
-      this.router.navigateByUrl('login');
-   }
+  //   if(!localStorage?.getItem('jwtToken')){
+  //     alert("You must be logged in to view Adverts");
+  //     this.router.navigateByUrl('cars-advert-website/login');
+  //  }
 
     this.getBrands();
     this.getNumberOfTotalPages();
@@ -65,32 +65,31 @@ getNumberOfTotalPages(){
       this.adverts = data
       console.log("@@@@@@@@@@" + this.adverts.length);
       console.log(data);
-    });
+    },(error =>{
+      if(error.status === 403){
+        alert("Your credentials are not valid.");
+        localStorage.removeItem('jwtToken');
+        this.router.navigate(['cars-advert-website/login']);
+      }
+    }));
   }
 
-//   getImageUrl(blob: Blob): string {
-//     if (blob instanceof Blob) {
-//         const reader = new FileReader();
-//         reader.readAsDataURL(blob);
-//         reader.onloadend = () => {
-//             return reader.result as string;
-//         };
-//     } else {
-//         console.error('Parameter is not a Blob:', blob);
-//         return ''; // or any default value
-//     }
-//     return "";
-// }
   onOptionSelect(event: Event){
     this.numberOfAdsPerPage = (event.target as HTMLSelectElement).value; 
-    this.getNumberOfTotalPages();
-    this.getAdvertsWithPagination();
+    //this.getNumberOfTotalPages();
+    //this.getAdvertsWithPagination();
   }
   getBrands(){
     return this.createAdvertService.getBrands().subscribe((data:string[])=>{
       console.log(' brands data from service' + data)
       this.brands = data
-    })
+    },(error =>{
+      if(error.status === 403){
+        alert("Your credentials are not valid");
+        localStorage.removeItem('jwtToken');
+        this.router.navigate(['cars-advert-website/login']);
+      }
+    }))
   }
   getModels(forBrand:string){
     this.modelService.getModels(forBrand)
@@ -136,7 +135,13 @@ getNumberOfTotalPages(){
       this.createAdvertService.
       getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
         this.adverts = data
-    });
+    },(error =>{
+      if(error.status === 403){
+        alert("Your credentials are not valid");
+        localStorage.removeItem('jwtToken');
+        this.router.navigate(['cars-advert-website/login']);
+      }
+    }));
   }
 
   onAdvertClicked(advretId: string) {
