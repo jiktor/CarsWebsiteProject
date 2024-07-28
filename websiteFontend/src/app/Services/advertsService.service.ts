@@ -121,7 +121,28 @@ getPagesCount(adsPerPage: string): Observable<string>{
       .set('adsPerPage', adsPerPage)
 
   return this.httpClient
-              .get<string>('http://localhost:8080/cars-advert-website/viewAdverts/countPages',
+              .get<string>('http://localhost:8080/cars-advert-website/viewAdverts/getAdvertsCountWithFilter',
+                                {headers,params});
+  
+}
+
+getPagesCountWithFilter(pageSize: string, brand: string, model:string, toPrice: string, fromPrice: string): Observable<string>{
+
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+  });
+  console.log('headr sent from service'+headers)
+
+  const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('sortField','price')
+      .set('brand',brand)
+      .set('model',model)
+      .set('fromPrice', fromPrice)
+      .set('toPrice', toPrice);
+
+  return this.httpClient
+              .get<string>('http://localhost:8080/cars-advert-website/viewAdverts/getAdvertsCountWithFilter',
                                 {headers,params});
   
 }

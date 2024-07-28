@@ -142,6 +142,16 @@ getNumberOfTotalPages(){
         this.router.navigate(['cars-advert-website/login']);
       }
     }));
+
+    this.getTotalNumberOfPagesWithFilter();
+  }
+
+  getTotalNumberOfPagesWithFilter(){
+    this.subscription = 
+    this.createAdvertService.
+      getPagesCountWithFilter(this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterToPrice,this.filterFromPrice).subscribe((data:string)=>{
+        this.totalPages = data
+    });
   }
 
   onAdvertClicked(advretId: string) {
