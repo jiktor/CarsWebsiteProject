@@ -17,9 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class CarAdvertsServiceImpl implements CarAdvertsService {
@@ -70,6 +68,38 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		}
 		carAdvertsRepository.save(carAdvertsDao);
 	}
+
+	@Override
+	public List<CarAdvertDto> getPreviouslyViewedAdds(HttpServletRequest request) {
+		List <Long> advertsId = new ArrayList<>();
+		List <CarAdvertsDao> carAdvertsDaoList = new ArrayList<>();
+		List <CarAdvertDto> result = new ArrayList<>();
+		UserDao userDao = usreService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7)));
+		if(userDao.getRecentlyViewdAdverts() != null) {
+			for (Long id : userDao.getRecentlyViewdAdverts()) {
+				CarAdvertsDao carAdvertsDao = carAdvertsRepository.findById(id).get();
+				CarAdvertDto carAdvertDto = new CarAdvertDto();
+				//
+				Set<byte[]> imagesSet = new HashSet<>();
+				for (ImageDao image : carAdvertsDao.getImageData()) {
+					imagesSet.add(image.getImage());
+				}
+
+				carAdvertDto
+						.setModel(carAdvertsDao.getModel().getModel().name())
+						.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
+						.setPrice(carAdvertsDao.getPrice())
+						.setDescription(carAdvertsDao.getDescription())
+						.setEngine(carAdvertsDao.getEngine())
+						.setImages(imagesSet)
+						.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
+				result.add(carAdvertDto);
+				//
+			}
+		}
+		return result;
+	}
+
 
 	@Override
 	public List<CarAdvertDto> getAllAdverts() {
@@ -271,7 +301,45 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 	}
 
 	@Override
-	public Object getSingleAdvert(Long advertId) {
+	public Long getAdvertsCountWithFilter(int pageNumber,
+										  int pageSize,
+										  String sortField,
+										  String sortOrder,
+										  String engine,
+										  String brand,
+										  String model,
+										  String dateOfManufacturing,
+										  String fromPrice,
+										  String toPrice) {
+
+		Long modelsDaoId = null;
+		if(model!=null && !model.equals("null")){
+			modelsDaoId = modelsService.getModelsByModel(Models.valueOf(model)).getId();
+		}
+
+		Long brandsDaoId = null;
+		if(brand!=null && !brand.equals("null")){
+			brandsDaoId = brandsService.getBrandDaoByBrand(Brands.valueOf(brand)).getId();
+		}
+		Float fromPriceact = null;
+		if(fromPrice!=null && fromPrice != ""){
+			fromPriceact = Float.valueOf(fromPrice);
+		}
+		Float toPriceact = null;
+		if(toPrice!=null && toPrice != ""){
+			toPriceact = Float.valueOf(toPrice);
+		}
+		Date dateManufacturing = null;
+		if(dateManufacturing != null){
+			dateManufacturing = new Date(dateOfManufacturing);
+		}
+		Long advertsCount = carAdvertsRepository.findCountWithParams(modelsDaoId,brandsDaoId,fromPriceact,toPriceact,engine,dateManufacturing);
+		//Logic for returning number of pages basedon total number of ads and the size of the page
+		return  (advertsCount>pageSize) ? ((advertsCount%pageSize)>0) ? ((advertsCount/pageSize)+1):((advertsCount/pageSize)) : (1);
+	}
+
+	@Override
+	public Object getSingleAdvert(Long advertId, HttpServletRequest request) {
 		CarAdvertsDao carAdvertsDao = carAdvertsRepository.getReferenceById(advertId);
 
 		CarAdvertDto carAdvertDto = new CarAdvertDto();
@@ -288,6 +356,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		for(ImageDao image : carAdvertsDao.getImageData()){
 			carAdvertDto.getImages().add(image.getImage());
 		}
+		usreService.updateLastCheckedRequest(request,advertId);
 		return carAdvertDto;
 	}
 

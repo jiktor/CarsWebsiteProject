@@ -124,3 +124,17 @@
   max-height: 100vw;
   object-fit: contain;
 }
+.previously-opened-container{
+  background-color: steelblue;
+  margin: 2px;
+  border: solid;
+  border-radius: 5px;
+}
+.opened-adds{
+  background-color: white;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: flex;
+}

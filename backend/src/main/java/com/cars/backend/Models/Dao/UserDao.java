@@ -41,6 +41,10 @@ public class UserDao implements UserDetails {
 	@OneToMany(mappedBy = "owner")
 	private List<CarAdvertsDao> carAdvertsList;
 
+	@Column
+	private List<Long> recentlyViewdAdverts;
+
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
