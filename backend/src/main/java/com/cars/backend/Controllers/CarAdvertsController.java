@@ -108,8 +108,10 @@ public class CarAdvertsController {
 	}
 
 	@GetMapping("/getRecentlyViewed")
-	public ResponseEntity<List<CarAdvertDto>> getRecentlyViwed(@NonNull HttpServletRequest request){
-		return ResponseEntity.ok(this.carAdvertsService.getPreviouslyViewedAdds(request));
+	public ResponseEntity<List<CarAdvertDto>> getRecentlyViwed(
+			@RequestParam(value = "advertId", required = true) int advertId,
+			@NonNull HttpServletRequest request){
+		return ResponseEntity.ok(this.carAdvertsService.getPreviouslyViewedAdds(request, (long) advertId));
 	}
 
 	}

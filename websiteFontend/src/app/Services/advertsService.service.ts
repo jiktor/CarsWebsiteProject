@@ -161,5 +161,20 @@ getAdvertismentOwner (advertId: number): Observable<OwnerModel>{
                                 {headers,params});
   
 }
+
+getPreviouslyViewdAdverts (advertId): Observable<CreateAdvertModel[]>{
+
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+  });
+
+  const params = new HttpParams()
+      .set('advertId', advertId)
+
+  return this.httpClient
+  .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/getRecentlyViewed',
+                    {headers,params});
+
+}
     
 }

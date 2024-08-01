@@ -73,12 +73,47 @@
             </tbody>
             </table>
         </div>
-    
+   
 </div>
-<div class="previously-opened-container">
+
+<div class="previously-opened-container" >
     <h1 style="text-align: center;">Previously viewed adds</h1>
-    <div class="opened-adds">
-        <h1>asdsad</h1>
+    <ng-container class="opened-adds" *ngIf="recentlyViewedAdverts.length==0">
+        <h1>You haven't view any adverts before</h1>
+    </ng-container> 
+    <div class="opened-adds" style="background-color: steelblue;" *ngIf="recentlyViewedAdverts.length > 0">
+        <div class="row-container" *ngFor="let advert of this.recentlyViewedAdverts">
+                <div class="advert-inside-container" (click)="onAdvertClicked(advert.id)">
+                    <div class="advert-image" style="border: 2px solid;" >
+                        <img [src]="'data:image/png;base64,'+advert.images[0]" alt="Img">
+                    </div>
+                    <div class="advert-description" style="border: 2px solid;">
+                        <h1>{{ advert.brand }} {{advert.model}}</h1>
+                        <strong style="text-align: left;">Price: {{advert.price }}</strong>
+                    </div>
+                </div>
+        </div>
     </div>
 </div>
+
+
+<!-- <div class="previously-opened-container">
+    <h1 style="text-align: center;">Previously viewed adds</h1>
+    <ng-container class="opened-adds" *ngIf="recentlyViewedAdverts.length == 0">
+        <h1>You haven't viewed any adverts before</h1>
+    </ng-container>
+    <div class="opened-adds" *ngIf="recentlyViewedAdverts.length > 0">
+        <div class="row-container" *ngFor="let advert of recentlyViewedAdverts">
+            <div class="advert-inside-container" (click)="onAdvertClicked(advert.id)">
+                <div class="advert-image">
+                    <img [src]="'data:image/png;base64,'+advert.images[0]" alt="Img">
+                </div>
+                <div class="advert-description">
+                    <h1>{{ advert.brand }} {{ advert.model }}</h1>
+                    <strong>Price: {{ advert.price }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 

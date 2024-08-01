@@ -10,6 +10,20 @@
   width: 80vw;
   background-color:white;
 }
+.advert-image {
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  align-items: center;      /* Center vertically */
+  width: 100%;
+  height: 200px;
+  overflow: hidden;         /* Ensure the image doesn't overflow */
+}
+
+.advert-image img {
+  width: 100%;
+  height: 100%;             /* Maintain aspect ratio */
+  object-fit:contain;       /* Cover the container while maintaining aspect ratio */
+}
 .styled-paragraph {
   font-size: 18px;             /* Sets the font size to 18 pixels */
   color: #333;                 /* Sets the text color to a dark gray */
@@ -18,6 +32,20 @@
   border-radius: 5px;          /* Rounds the corners of the paragraph by 5 pixels */
   border: 1px solid #ddd;      /* Adds a light gray border with a width of 1 pixel */
   font-size: 12px;
+}
+
+.row-container {
+  height: 50%;
+  transition: all 0.3s ease; /* Smooth transition for the hover effect */
+  width: 100%;
+}
+.row-container:hover {
+  background-color: lightblue; /* Change background color on hover */
+  transform: scale(1.05); /* Grow the element on hover */
+}
+
+.item {
+  margin: 5px; /* Optional: add some spacing between items */
 }
 
 .description-container {
@@ -126,9 +154,12 @@
 }
 .previously-opened-container{
   background-color: steelblue;
-  margin: 2px;
   border: solid;
   border-radius: 5px;
+  width: 100%;
+  margin-top: 5px;
+  margin-right: 50px;
+  
 }
 .opened-adds{
   background-color: white;
@@ -136,5 +167,24 @@
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 5px;
-  display: flex;
+  padding: 5px;
+  display:flex;
+  justify-content: center;
+  border-radius: 5px;
+}
+.advert-inside-container{
+  background-color:steelblue;
+ 
+  width: 100%;
+  cursor: pointer;
+  /* display:flexbox; */
+  height:fit-content;
+}
+.advert-description{
+  transition: all 0.3s ease; /* Smooth transition for the hover effect */
+  width: 100%;
+}
+.row-container:hover .advert-description {
+  background-color: white; /* Change to your desired color */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
 }

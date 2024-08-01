@@ -70,7 +70,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 	}
 
 	@Override
-	public List<CarAdvertDto> getPreviouslyViewedAdds(HttpServletRequest request) {
+	public List<CarAdvertDto> getPreviouslyViewedAdds(HttpServletRequest request, Long advertId) {
 		List <Long> advertsId = new ArrayList<>();
 		List <CarAdvertsDao> carAdvertsDaoList = new ArrayList<>();
 		List <CarAdvertDto> result = new ArrayList<>();
@@ -86,6 +86,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 				}
 
 				carAdvertDto
+						.setId(carAdvertsDao.getId())
 						.setModel(carAdvertsDao.getModel().getModel().name())
 						.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
 						.setPrice(carAdvertsDao.getPrice())
@@ -97,6 +98,16 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 				//
 			}
 		}
+		if(userDao.getRecentlyViewdAdverts() == null){
+			usreService.updateLastCheckedRequest(request,advertId);
+		}
+		else {
+			for(int i =0 ; i<userDao.getRecentlyViewdAdverts().size(); i++) {
+				if(advertId.equals(userDao.getRecentlyViewdAdverts().get(i))) break;
+				if((i+1) == userDao.getRecentlyViewdAdverts().size())usreService.updateLastCheckedRequest(request, advertId);
+			}
+		}
+
 		return result;
 	}
 
@@ -356,7 +367,6 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		for(ImageDao image : carAdvertsDao.getImageData()){
 			carAdvertDto.getImages().add(image.getImage());
 		}
-		usreService.updateLastCheckedRequest(request,advertId);
 		return carAdvertDto;
 	}
 
