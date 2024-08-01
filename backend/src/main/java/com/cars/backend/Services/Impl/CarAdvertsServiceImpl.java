@@ -17,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -235,82 +237,169 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		return list;
 	}
 	//!!!!!
-	@Override
-	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
-																			  int pageSize,
-																			  String sortField,
-																			  String sortOrder,
-																			  String engine,
-																			  String brand,
-																			  String model,
-																			  String dateOfManufacturing,
-																			  String fromPrice,
-																			  String toPrice
-																			  ) {
-		Sort sort = Sort.by(sortField).ascending(); // or Sort.by(sortField).descending() for descending order
-		if ("desc".equals(sortOrder)) {
-			sort = sort.descending();
-		}else{
-			sort = sort.ascending();
-		}
-		org.springframework.data.domain.Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+	//!bellow is the original working implementation for filtration
+//	@Override
+//	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
+//																			  int pageSize,
+//																			  String sortField,
+//																			  String sortOrder,
+//																			  String engine,
+//																			  String brand,
+//																			  String model,
+//																			  String dateOfManufacturing,
+//																			  String fromPrice,
+//																			  String toPrice
+//																			  ) {
+//		Sort sort = Sort.by(sortField).ascending(); // or Sort.by(sortField).descending() for descending order
+//		if ("desc".equals(sortOrder)) {
+//			sort = sort.descending();
+//		}else{
+//			sort = sort.ascending();
+//		}
+//		org.springframework.data.domain.Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+//
+//		Long modelsDaoId = null;
+//		if(model!=null && !model.equals("null")){
+//			modelsDaoId = modelsService.getModelsByModel(Models.valueOf(model)).getId();
+//		}
+//
+//		Long brandsDaoId = null;
+//		if(brand!=null && !brand.equals("null")){
+//			brandsDaoId = brandsService.getBrandDaoByBrand(Brands.valueOf(brand)).getId();
+//		}
+//		Float fromPriceact = null;
+//		if(fromPrice!=null && fromPrice != ""){
+//			fromPriceact = Float.valueOf(fromPrice);
+//		}
+//		Float toPriceact = null;
+//		if(toPrice!=null && toPrice != ""){
+//			toPriceact = Float.valueOf(toPrice);
+//		}
+//		Date dateManufacturing = null;
+//		if(dateManufacturing != null){
+//			dateManufacturing = new Date(dateOfManufacturing);
+//		}
+//		Page<CarAdvertsDao> carAdvertsDaoPage = carAdvertsRepository.findByDynamicParams(
+//				modelsDaoId,
+//				brandsDaoId,
+//				fromPriceact,
+//				toPriceact,
+//				engine,
+//				dateManufacturing,
+//				pageable
+//		);
+//		List<CarAdvertsDao> carAdvertsDaoList = carAdvertsDaoPage.getContent();
+//		//converting dao to dto object
+//		List <CarAdvertDto> list = new ArrayList<>();
+//		for(CarAdvertsDao carAdvertsDao : carAdvertsDaoList){
+//			CarAdvertDto carAdvertDto = new CarAdvertDto();
+//
+//			Set<byte[]> imagesSet = new HashSet<>();
+//			for(ImageDao image : carAdvertsDao.getImageData()){
+//				imagesSet.add(image.getImage());
+//			}
+//
+//			carAdvertDto
+//					.setId(carAdvertsDao.getId())
+//					.setModel(carAdvertsDao.getModel().getModel().name())
+//					.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
+//					.setPrice(carAdvertsDao.getPrice())
+//					.setDescription(carAdvertsDao.getDescription())
+//					.setEngine(carAdvertsDao.getEngine())
+//					.setImages(imagesSet)
+//					.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
+//			list.add(carAdvertDto);
+//		}
+//		//
+//		return list;
+//	}
+//above is the original working implementation for filtration
+	//below is the new ipmplementation for filtration
+@Override
+public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
+																		  int pageSize,
+																		  String sortField,
+																		  String sortOrder,
+																		  String engine,
+																		  String brand,
+																		  String model,
+																		  String fromDate,
+																		  String toDate,
+																		  String fromPrice,
+																		  String toPrice
+) throws ParseException {
+	Sort sort = Sort.by(sortField).ascending(); // or Sort.by(sortField).descending() for descending order
+	if ("desc".equals(sortOrder)) {
+		sort = sort.descending();
+	}else{
+		sort = sort.ascending();
+	}
+	org.springframework.data.domain.Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
-		Long modelsDaoId = null;
-		if(model!=null && !model.equals("null")){
-			modelsDaoId = modelsService.getModelsByModel(Models.valueOf(model)).getId();
-		}
-
-		Long brandsDaoId = null;
-		if(brand!=null && !brand.equals("null")){
-			brandsDaoId = brandsService.getBrandDaoByBrand(Brands.valueOf(brand)).getId();
-		}
-		Float fromPriceact = null;
-		if(fromPrice!=null && fromPrice != ""){
-			fromPriceact = Float.valueOf(fromPrice);
-		}
-		Float toPriceact = null;
-		if(toPrice!=null && toPrice != ""){
-			toPriceact = Float.valueOf(toPrice);
-		}
-		Date dateManufacturing = null;
-		if(dateManufacturing != null){
-			dateManufacturing = new Date(dateOfManufacturing);
-		}
-		Page<CarAdvertsDao> carAdvertsDaoPage = carAdvertsRepository.findByDynamicParams(
-				modelsDaoId,
-				brandsDaoId,
-				fromPriceact,
-				toPriceact,
-				engine,
-				dateManufacturing,
-				pageable
-		);
-		List<CarAdvertsDao> carAdvertsDaoList = carAdvertsDaoPage.getContent();
-		//converting dao to dto object
-		List <CarAdvertDto> list = new ArrayList<>();
-		for(CarAdvertsDao carAdvertsDao : carAdvertsDaoList){
-			CarAdvertDto carAdvertDto = new CarAdvertDto();
-
-			Set<byte[]> imagesSet = new HashSet<>();
-			for(ImageDao image : carAdvertsDao.getImageData()){
-				imagesSet.add(image.getImage());
-			}
-
-			carAdvertDto
-					.setId(carAdvertsDao.getId())
-					.setModel(carAdvertsDao.getModel().getModel().name())
-					.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
-					.setPrice(carAdvertsDao.getPrice())
-					.setDescription(carAdvertsDao.getDescription())
-					.setEngine(carAdvertsDao.getEngine())
-					.setImages(imagesSet)
-					.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
-			list.add(carAdvertDto);
-		}
-		//
-		return list;
+	Long modelsDaoId = null;
+	if(model!=null && !model.equals("null")){
+		modelsDaoId = modelsService.getModelsByModel(Models.valueOf(model)).getId();
 	}
 
+	Long brandsDaoId = null;
+	if(brand!=null && !brand.equals("null")){
+		brandsDaoId = brandsService.getBrandDaoByBrand(Brands.valueOf(brand)).getId();
+	}
+	Float fromPriceact = null;
+	if(fromPrice!=null && fromPrice != ""){
+		fromPriceact = Float.valueOf(fromPrice);
+	}
+	Float toPriceact = null;
+	if(toPrice!=null && toPrice != ""){
+		toPriceact = Float.valueOf(toPrice);
+	}
+	Date fromDateParam = null;
+	if(fromDate != null){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		fromDateParam = dateFormat.parse(fromDate);
+	}
+	Date toDateParam = null;
+	if(toDate != null){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		toDateParam = dateFormat.parse(toDate);
+	}
+
+	Page<CarAdvertsDao> carAdvertsDaoPage = carAdvertsRepository.findByDynamicParams(
+			modelsDaoId,
+			brandsDaoId,
+			fromPriceact,
+			toPriceact,
+			engine,
+			fromDateParam,
+			toDateParam,
+			pageable
+	);
+	List<CarAdvertsDao> carAdvertsDaoList = carAdvertsDaoPage.getContent();
+	//converting dao to dto object
+	List <CarAdvertDto> list = new ArrayList<>();
+	for(CarAdvertsDao carAdvertsDao : carAdvertsDaoList){
+		CarAdvertDto carAdvertDto = new CarAdvertDto();
+
+		Set<byte[]> imagesSet = new HashSet<>();
+		for(ImageDao image : carAdvertsDao.getImageData()){
+			imagesSet.add(image.getImage());
+		}
+
+		carAdvertDto
+				.setId(carAdvertsDao.getId())
+				.setModel(carAdvertsDao.getModel().getModel().name())
+				.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
+				.setPrice(carAdvertsDao.getPrice())
+				.setDescription(carAdvertsDao.getDescription())
+				.setEngine(carAdvertsDao.getEngine())
+				.setImages(imagesSet)
+				.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
+		list.add(carAdvertDto);
+	}
+	//
+	return list;
+}
+//@@
 	@Override
 	public Long getAdvertsCountWithFilter(int pageNumber,
 										  int pageSize,

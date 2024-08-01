@@ -5,6 +5,7 @@ import com.cars.backend.Models.Dto.CarAdvertDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.lang.NonNull;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface CarAdvertsService {
@@ -16,6 +17,19 @@ public interface CarAdvertsService {
 	public List<CarAdvertDto> getAdvertsWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder);
 	public List<CarAdvertDto> getAdvertsByEngineWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder,String engine);
 	public Long getAllAdvertsCount(int adsPerPage);
+	//!!below is the original working service method for fitration
+//	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
+//																			  int pageSize,
+//																			  String sortField,
+//																			  String sortOrder,
+//																			  String engine,
+//																			  String brand,
+//																			  String model,
+//																			  String dateOfManufacturing,
+//																			  String fromPrice,
+//																			  String toPrice);
+	//!!above is the original working method for filtration
+	//!!below is the new method for filtration
 	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
 																			  int pageSize,
 																			  String sortField,
@@ -23,9 +37,11 @@ public interface CarAdvertsService {
 																			  String engine,
 																			  String brand,
 																			  String model,
-																			  String dateOfManufacturing,
+																			  String fromDate,
+																			  String toDate,
 																			  String fromPrice,
-																			  String toPrice);
+																			  String toPrice) throws ParseException;
+	//!!above is the new method for filtration
 	public Long getAdvertsCountWithFilter(int pageNumber,
 										  int pageSize,
 										  String sortField,
