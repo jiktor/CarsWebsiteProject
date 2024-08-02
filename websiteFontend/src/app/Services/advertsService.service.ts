@@ -33,19 +33,19 @@ export class CreateAdvertService{
       return this.httpClient.get<CreateAdvertModel>('http://localhost:8080/cars-advert-website/viewAdverts/getSingleAdvert',{headers,params});
     }
 
-    getAllAdverts(): Observable<CreateAdvertModel[]>{
+    // getAllAdverts(): Observable<CreateAdvertModel[]>{
 
-      const headers = new HttpHeaders({
-        'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
-      });
-      console.log('headr sent from service'+headers)
+    //   const headers = new HttpHeaders({
+    //     'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+    //   });
+    //   console.log('headr sent from service'+headers)
       
 
-      return this.httpClient
-                  .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/all',
-                                    {headers});
+    //   return this.httpClient
+    //               .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/all',
+    //                                 {headers});
       
-    }
+    // }
 
     getAdvertsWithPagination(pageNumber: string, pageSize): Observable<CreateAdvertModel[]>{
 
@@ -64,7 +64,7 @@ export class CreateAdvertService{
                                     {headers,params});
       
     }
-    getAdvertsWithPaginationAndFilter(pageNumber: string, pageSize: string, brand: string, model:string, orderSelect: string, toPrice: string, fromPrice: string): Observable<CreateAdvertModel[]>{
+    getAdvertsWithPaginationAndFilter(pageNumber: string, pageSize: string, brand: string, model:string, orderSelect: string, toPrice: string, fromPrice: string, fromYear: string, toYear: string): Observable<CreateAdvertModel[]>{
 
       const headers = new HttpHeaders({
         'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
@@ -78,7 +78,9 @@ export class CreateAdvertService{
       .set('model',model)
       .set('sortOrder', orderSelect)
       .set('fromPrice', fromPrice)
-      .set('toPrice', toPrice);
+      .set('toPrice', toPrice)
+      .set('fromDate',fromYear)
+      .set('toDate',toYear);
 
       return this.httpClient
                   .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/getAdverts',

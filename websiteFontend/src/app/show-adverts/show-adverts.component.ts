@@ -6,12 +6,13 @@ import { NgFor } from '@angular/common';
 import { NgModel } from '@angular/forms';
 import { ModelsService } from '../Services/models.services';
 import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-show-adverts',
   standalone: true,
   providers: [CreateAdvertService, ModelsService],
-  imports: [NgFor],
+  imports: [NgFor,NgIf],
   templateUrl: './show-adverts.component.html',
   styleUrl: './show-adverts.component.css'
 })
@@ -30,6 +31,49 @@ export class ShowAdvertsComponent {
   filterOrderSelect: string = "";
   filterFromPrice: string = "";
   filterToPrice: string = "";
+  fromYear: string = "";
+  toYear: string = "";
+  fromYearHtmlVal: string = "";
+  toYearHtmlVal: string = "";
+  opeanDateFilter: boolean = false;
+
+
+  closeDatePickerDiscardButton() {
+    this.fromYear="";
+    this.toYear = "";
+    this.fromYearHtmlVal="";
+    this.toYearHtmlVal="";
+    this.opeanDateFilter=false;
+  }
+  toYearInput($event: Event) {
+    if((event.target as HTMLSelectElement).value != ""){
+      var value = (event.target as HTMLSelectElement).value + "-12-31"
+      this.toYear = value
+      this.toYearHtmlVal = (event.target as HTMLSelectElement).value;
+    }else{
+      this.toYear = ""
+      this.toYearHtmlVal = "";
+    }
+  }
+  startingYearInput($event: Event) {
+    if( (event.target as HTMLSelectElement).value != ""){
+      var value = (event.target as HTMLSelectElement).value + "-01-01"
+      this.fromYear = value;
+      this.fromYearHtmlVal = (event.target as HTMLSelectElement).value;
+    }else{
+      this.fromYear = "";
+      this.fromYearHtmlVal = "";
+    }
+  }
+
+  closeDatePicker() {
+    this.opeanDateFilter = false;
+    console.log(this.fromYear +" to year: " +this.toYear)
+  }
+
+  openDatePicker() {
+    this.opeanDateFilter = true;
+    }
 
   ngOnInit(): void {
 
@@ -133,7 +177,7 @@ getNumberOfTotalPages(){
   applyFilter() {
     this.subscription = 
       this.createAdvertService.
-      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice,this.fromYear,this.toYear).subscribe((data:CreateAdvertModel[])=>{
         this.adverts = data
     },(error =>{
       if(error.status === 403){
@@ -163,7 +207,7 @@ getNumberOfTotalPages(){
       this.currentPage++;
 
       this.createAdvertService.
-      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice,this.fromYear,this.toYear).subscribe((data:CreateAdvertModel[])=>{
         this.adverts = data
     });
     }
@@ -174,7 +218,7 @@ getNumberOfTotalPages(){
       this.currentPage--;
 
       this.createAdvertService.
-      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice,this.fromYear,this.toYear).subscribe((data:CreateAdvertModel[])=>{
         this.adverts = data
     });
     }
@@ -184,7 +228,7 @@ getNumberOfTotalPages(){
     this.currentPage = parseInt(this.totalPages);
 
     this.createAdvertService.
-      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice,this.fromYear,this.toYear).subscribe((data:CreateAdvertModel[])=>{
         this.adverts = data
     });
     }
@@ -193,7 +237,7 @@ getNumberOfTotalPages(){
     this.currentPage = 0;
 
     this.createAdvertService.
-      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice).subscribe((data:CreateAdvertModel[])=>{
+      getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice,this.fromYear,this.toYear).subscribe((data:CreateAdvertModel[])=>{
         this.adverts = data
     });
   }

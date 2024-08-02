@@ -354,12 +354,12 @@ public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pa
 		toPriceact = Float.valueOf(toPrice);
 	}
 	Date fromDateParam = null;
-	if(fromDate != null){
+	if(fromDate != null && fromDate != ""){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		fromDateParam = dateFormat.parse(fromDate);
 	}
 	Date toDateParam = null;
-	if(toDate != null){
+	if(toDate != null && toDate != ""){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		toDateParam = dateFormat.parse(toDate);
 	}
