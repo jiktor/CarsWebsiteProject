@@ -18,6 +18,9 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
   styleUrl: './create-advert.component.css'
 })
 export class CreateAdvertComponent {
+openAditionFields() {
+  alert("open additional fields")
+}
   formData: any = {};
   selectedFiles: File[] = [];
 
@@ -76,6 +79,7 @@ export class CreateAdvertComponent {
       }
     });
 
+    alert("New advert has been successfuly created")
     this.router.navigateByUrl('cars-advert-website/show-adverts');
   }
 

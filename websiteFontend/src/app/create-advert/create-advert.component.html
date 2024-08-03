@@ -57,5 +57,14 @@
             <textarea   formControlName="description"
                         placeholder="Enter additional data" [(ngModel)]="formData.description"></textarea>
         </div>
-        <input type="submit" value="Save" id="btn"/>
+        
+        <div class="tooltip" style="display: flex;align-items: center;">
+            <!-- <button type="submit" [disabled]="!createAdvertForm.valid" id="btn">Save</button> -->
+            <button class="additional-fields-button" type="button" (click)="openAditionFields()">Additional information</button>
+            <input class="submit-button" style="width: 100%;" type="submit" value="Save" id="btn" [disabled]="createAdvertForm.invalid"/>
+            <span class="tooltiptext">Please fill all required fields</span>
+        </div>
+
+
+        <!-- <input class="submit-button" type="submit" value="Save" id="btn" [disabled]="createAdvertForm.invalid"/> -->
 </form>

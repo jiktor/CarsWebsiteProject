@@ -26,6 +26,7 @@ form {
     resize:none;
     width:70vw;
     overflow-y: scroll;
+    overflow-x: hidden;
     height:90dvh;
 }
 
@@ -52,8 +53,9 @@ input[type = submit]{
     grid-column: span 2;
 }
 input[type=submit]:hover{
-    background-color: #45a049;
+    background-color: whitesmoke;
 }
+
 div{
    padding: 20px;
    margin: 40px;
@@ -111,3 +113,69 @@ input.ng-invalid.ng-touched{
 select.ng-invalid.ng-touched{
     border: red 1px solid;
 }
+.submit-button:disabled {
+    background-color: #cccccc; /* Disabled button color */
+    color: #666666; /* Disabled text color */
+    cursor: not-allowed;
+    border: 2px solid;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+  }
+  .submit-button:enabled {
+    background-color: 45a049; 
+    color: black; 
+    cursor: not-pointer;
+    border: 2px solid;
+    height: 10%;
+  }
+
+
+  /* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: not-allowed; /* Show not-allowed cursor on disabled buttons */
+    width: 90%;
+    grid-column: span 2;
+    height: 100%;
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    /*padding: 1px 0;*/
+    position:absolute;
+    z-index: 1;
+    bottom: 105%; /* Position the tooltip above the button */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Disabled button style */
+  /* button[disabled] {
+    background-color: #ddd; 
+    color: #aaa; 
+    cursor: not-allowed; 
+  } */
+
+  .additional-fields-button{
+    width: 100%;
+    height: 10%;
+    border-radius: 5px;
+    border: 2px solid;
+    background-color: steelblue;
+  }
