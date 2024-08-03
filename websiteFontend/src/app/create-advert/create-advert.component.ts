@@ -63,7 +63,18 @@ export class CreateAdvertComponent {
       formData.append('images', this.selectedFiles[i]);
     }
 
-    this.createAdvertService.createAdvertFormData(formData).subscribe();
+    this.createAdvertService.createAdvertFormData(formData).subscribe({
+      next: (response) => {
+        // Handle the response if needed
+        console.log('Advert saved successfully', response);
+        // Navigate to the new route after the advert is successfully saved
+        //this.router.navigateByUrl('cars-advert-website/show-adverts');
+      },
+      error: (error) => {
+        // Handle error case
+        console.error('Error saving advert', error);
+      }
+    });
 
     this.router.navigateByUrl('cars-advert-website/show-adverts');
   }
