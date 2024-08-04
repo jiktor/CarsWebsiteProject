@@ -1,4 +1,5 @@
 
+
 <div class="firstContainer" style="background-color: steelblue; border: solid 2px; border-color: black;">
     <div class="gridRowOne filterContainer">
         <div class="vertical-container" style="grid-column: 1; grid-row: 1;">
@@ -102,14 +103,15 @@
 
 <div *ngIf="opeanDateFilter" class="overlay">
     <div class="date-picker-modal">
+        <h3>Date of manufacturing filter</h3>
         <div>
-            <label for="yearPicker">Starting year:</label>
+            <label for="yearPicker">From year:</label>
             <input value={{this.fromYearHtmlVal}} style="margin-left: 17px;" id="yearPicker" type="number" min="1900" max="2100" step="1" placeholder="Year" (input)="startingYearInput($event)">
         </div>
 
         <div>
-            <label for="yearPicker">Maximal year:</label>
-            <input value={{this.toYearHtmlVal}} style="margin-left: 10px;" id="yearPicker" type="number" min="1900" max="2100" step="1" placeholder="Year" (input)="toYearInput($event)">
+            <label for="yearPicker">To year:</label>
+            <input value={{this.toYearHtmlVal}} style="margin-left: 35px;" id="yearPicker" type="number" min="1900" max="2100" step="1" placeholder="Year" (input)="toYearInput($event)">
         </div>
         <!-- Your date picker content here -->
          <div style="display: flex; justify-content: center;">

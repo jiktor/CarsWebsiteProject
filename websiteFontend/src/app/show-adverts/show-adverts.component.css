@@ -76,6 +76,8 @@ div{
     transition: box-shadow 0.3s ease;
 }
 .firstContainer{
+
+
     height: 100vh;
     display: grid;
     grid-template-rows: repeat(8,1fr);
@@ -87,7 +89,6 @@ div{
     width:70vw;
     height:90dvh;
 }
-
 
 
 ul {

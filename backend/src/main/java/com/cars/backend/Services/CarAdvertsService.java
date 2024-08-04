@@ -10,14 +10,9 @@ import java.util.List;
 
 public interface CarAdvertsService {
 	public List<Brands> getBrands();
-	public void saveCarAdvert(CarAdvertDto advertDto,@NonNull HttpServletRequest request);
+
 	public void saveCarAdvertNew(CarAdvertDto advertDto,@NonNull HttpServletRequest request);
 	public List<CarAdvertDto> getPreviouslyViewedAdds(@NonNull HttpServletRequest request, Long advrtId);
-//	public List<CarAdvertDto> getAllAdverts();
-//	public List<CarAdvertDto> getAdvertsWithPagination(int pageNumber, int pageSize);
-//	public List<CarAdvertDto> getAdvertsWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder);
-//	public List<CarAdvertDto> getAdvertsByEngineWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder,String engine);
-//	public Long getAllAdvertsCount(int adsPerPage);
 	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
 																			  int pageSize,
 																			  String sortField,
