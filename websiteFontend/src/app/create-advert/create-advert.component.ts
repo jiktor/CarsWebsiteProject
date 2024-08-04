@@ -18,8 +18,16 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
   styleUrl: './create-advert.component.css'
 })
 export class CreateAdvertComponent {
+closeAdditionalFields() {
+  this.showAdditionalFields = false;
+}
+engineTypeOptions: string[] = ["Diesel", "Electric", "Hybrid", "Petrol"];
+gearboxTypeOptions: string[] = ["Manual", "Automatic", "Semi-automatic"];
+colorOptions: string[] = ["Black","White","Red","Yellow","Blue","Green","Orange","Grey"];
+euroEmissionStandardOptions: string[] = ["Euro1","Euro2","Euro3","Euro4","Euro5","Euro6","Euro7"];
+showAdditionalFields: boolean = false;
 openAditionFields() {
-  alert("open additional fields")
+  this.showAdditionalFields = true;
 }
   formData: any = {};
   selectedFiles: File[] = [];
@@ -34,6 +42,13 @@ openAditionFields() {
     images: new FormArray([
       new FormControl(null,Validators.required)
     ]),
+    gearbox: new FormControl(null),
+    color: new FormControl(null),
+    emissionStandard: new FormControl(null),
+    engineType: new FormControl(null),
+    mileage: new FormControl(null),
+    horsePower: new FormControl(null),
+    location: new FormControl(null),
   })
   err: Error | null = null;
   brands: string[];

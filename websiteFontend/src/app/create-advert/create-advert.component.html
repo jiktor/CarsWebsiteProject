@@ -62,9 +62,61 @@
             <!-- <button type="submit" [disabled]="!createAdvertForm.valid" id="btn">Save</button> -->
             <button class="additional-fields-button" type="button" (click)="openAditionFields()">Additional information</button>
             <input class="submit-button" style="width: 100%;" type="submit" value="Save" id="btn" [disabled]="createAdvertForm.invalid"/>
-            <span class="tooltiptext">Please fill all required fields</span>
+         
         </div>
 
 
         <!-- <input class="submit-button" type="submit" value="Save" id="btn" [disabled]="createAdvertForm.invalid"/> -->
+
+
+        <div *ngIf="showAdditionalFields" class="modal-overlay" ></div>
+
+        <div *ngIf="showAdditionalFields" class="modal-container">
+            <div class="modal-grid">
+                <div class="grid-item heading" style="grid-column: span 3;">
+                    <h2>Additional Fields</h2>
+                </div>
+                <div class="grid-item">
+                    <label for="select1">Gearbox</label>
+                    <select formControlName="gearbox" [(ngModel)]="formData.gearbox">
+                         <option *ngFor="let option of gearboxTypeOptions" [value]="option">{{option}}</option> 
+                    </select>
+                </div>
+                <div class="grid-item">
+                    <label for="select2">Color</label>
+                    <select formControlName="color" [(ngModel)]="formData.color">
+                        <option *ngFor="let option of colorOptions" [value]="option">{{option}}</option>
+                    </select>
+                </div>
+                <div class="grid-item">
+                    <label for="select3">Emission standard</label>
+                    <select formControlName="emissionStandard" [(ngModel)]="formData.emissionStandard">
+                        <option *ngFor="let option of euroEmissionStandardOptions" [value]="option">{{option}}</option>
+                    </select>
+                </div>
+                <!-- Row 3 -->
+                <div class="grid-item">
+                    <label for="select4">Engine type</label>
+                    <select formControlName="engineType" [(ngModel)]="formData.engineType">
+                        <option *ngFor="let option of engineTypeOptions" [value]="option">{{option}}</option>
+                    </select>
+                </div>
+                <div class="grid-item">
+                    <label for="Mileage">Mileage</label>
+                    <input min="0" step="5000" type="number" formControlName="mileage" [(ngModel)]="formData.mileage">
+                </div>
+                <div class="grid-item">
+                    <label for="Horse power">Horse power</label>
+                    <input min="0" type="number" formControlName="horsePower" [(ngModel)]="formData.horsePower">
+                </div>
+                <!-- Row 4 -->
+                <div class="grid-item" style="grid-column: span 2;">
+                    <label for="text2">Vehicle location</label>
+                    <input maxlength="50" type="text" formControlName="location" [(ngModel)]="formData.location">
+                </div>
+                <div class="grid-item" style="display: flex; align-items: center; justify-content: flex-end;">
+                    <button type="button" (click)="closeAdditionalFields()">Close</button>
+                </div>
+            </div>
+        </div>
 </form>

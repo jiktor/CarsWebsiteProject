@@ -1,15 +1,10 @@
 package com.cars.backend.Models.Dto;
 
-import com.cars.backend.Models.Dao.Enums.Brands;
-import com.cars.backend.Models.Dao.Enums.Models;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.persistence.Column;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -24,6 +19,20 @@ public class CarAdvertDto {
 	private String description;
 	private String engine;
 	private Set<byte[]> images;
+	private String horsePower;
+	private String mileage;
+
+	private String gearbox;
+
+	private String color;
+
+	private String engineType;
+
+	private String euroEmmissions;
+
+	private String locationOfTheCar;
+
+//	private String condition;
 
 	public CarAdvertDto() {
 	}
@@ -38,6 +47,78 @@ public class CarAdvertDto {
 		this.engine = engine;
 		this.images = images;
 	}
+
+	public String getHorsePower() {
+		return horsePower;
+	}
+
+	public CarAdvertDto setHorsePower(String horsePower) {
+		this.horsePower = horsePower;
+		return this;
+	}
+
+	public String getMileage() {
+		return mileage;
+	}
+
+	public CarAdvertDto setMileage(String mileage) {
+		this.mileage = mileage;
+		return this;
+	}
+
+	public String getGearbox() {
+		return gearbox;
+	}
+
+	public CarAdvertDto setGearbox(String gearbox) {
+		this.gearbox = gearbox;
+		return this;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public CarAdvertDto setColor(String color) {
+		this.color = color;
+		return this;
+	}
+
+	public String getEngineType() {
+		return engineType;
+	}
+
+	public CarAdvertDto setEngineType(String engineType) {
+		this.engineType = engineType;
+		return this;
+	}
+
+	public String getEuroEmmissions() {
+		return euroEmmissions;
+	}
+
+	public CarAdvertDto setEuroEmmissions(String euroEmmissions) {
+		this.euroEmmissions = euroEmmissions;
+		return this;
+	}
+
+	public String getLocationOfTheCar() {
+		return locationOfTheCar;
+	}
+
+	public CarAdvertDto setLocationOfTheCar(String locationOfTheCar) {
+		this.locationOfTheCar = locationOfTheCar;
+		return this;
+	}
+
+//	public String getCondition() {
+//		return condition;
+//	}
+//
+//	public CarAdvertDto setCondition(String condition) {
+//		this.condition = condition;
+//		return this;
+//	}
 
 	public Long getId() {
 		return id;

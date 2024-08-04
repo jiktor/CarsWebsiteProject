@@ -16,6 +16,8 @@ import { OwnerModel } from '../Models/OwnerModel';
 })
 export class AdvertComponent {
 
+
+
     currentSlide =0;
 
 
@@ -29,6 +31,8 @@ export class AdvertComponent {
     isFullScreen = false;
     owner: OwnerModel;
     recentlyViewedAdverts: CreateAdvertModel[] ;
+    showAllCharacteristics: boolean = false;
+
 
     constructor(private route: ActivatedRoute,
                 private advertsService: CreateAdvertService,
@@ -86,5 +90,14 @@ export class AdvertComponent {
     this.currentSlide = (this.currentSlide - 1 + this.advert.images.length) % this.advert.images.length;
   }
 
+  openFullcharacteristics() {
+    this.showAllCharacteristics = true;
+    }
+
+  closeAllCharacteristics() {
+    this.showAllCharacteristics = false;
+  }
+
+  
  
 }

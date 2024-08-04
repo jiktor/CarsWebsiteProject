@@ -95,11 +95,11 @@ export class CreateAdvertService{
         });
         
      return  this.httpClient
-                  .post<HttpClient>('http://localhost:8080/cars-advert-website/createAdvert/save',
+                  .post<HttpClient>('http://localhost:8080/cars-advert-website/createAdvert/saveAdvert',
                   advertDto,
                    {headers});
   }
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!dolniq service e realbiq kojto se izpolwa !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
   createAdvertFormData(advertDto : FormData): Observable<HttpClient>{
 
     const headers = new HttpHeaders({
@@ -107,7 +107,7 @@ export class CreateAdvertService{
       });
       
    return  this.httpClient
-                .post<HttpClient>('http://localhost:8080/cars-advert-website/createAdvert/save',
+                .post<HttpClient>('http://localhost:8080/cars-advert-website/createAdvert/saveAdvert',
                 advertDto,
                  {headers});
 }

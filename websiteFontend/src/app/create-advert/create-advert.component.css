@@ -141,30 +141,6 @@ select.ng-invalid.ng-touched{
     height: 100%;
   }
   
-  /* Tooltip text */
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    /*padding: 1px 0;*/
-    position:absolute;
-    z-index: 1;
-    bottom: 105%; /* Position the tooltip above the button */
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  
-  /* Show the tooltip text when you mouse over the tooltip container */
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
-  
   /* Disabled button style */
   /* button[disabled] {
     background-color: #ddd; 
@@ -179,3 +155,88 @@ select.ng-invalid.ng-touched{
     border: 2px solid;
     background-color: steelblue;
   }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+ 
+    z-index: 999; /* Ensure it is below the modal */
+    pointer-events: auto; /* Enable click events for the overlay itself */
+}
+  .modal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Ensure the grid stretches to fill the container */
+    justify-content: flex-start; /* Align content to the top of the container */
+    background-color: steelblue;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 60%;
+    max-width: 800px; /* Optional: limit the width for better responsiveness */
+    height: auto; /* Allow height to adjust based on content */
+    max-height: 85vh; /* Ensure it doesn't exceed viewport height */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto auto; /* Rows adjust to fit content */
+    gap: 10px; /* Adjust spacing between grid items */
+    width: 100%;
+    height: auto; /* Allow grid to adjust height based on content */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px;
+    box-sizing: border-box; /* Ensure padding is included in width and height */
+}
+
+.grid-item input,
+.grid-item select {
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.grid-item button {
+    margin: 5px 0;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.modal-container h2 {
+    margin: 0;
+    text-align: center; /* Center heading text */
+}
+
+.grid-item button {
+    margin: 5px 0;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.grid-item:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.modal-container h2 {
+    margin: 0;
+}

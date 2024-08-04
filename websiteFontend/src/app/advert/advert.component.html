@@ -72,14 +72,17 @@
                 </tr>           
             </tbody>
             </table>
+            <div style="display: flex; justify-content: center; width: 100%; height: 6%; margin-top: 5px;">
+                <button class="show-all-characteristics-button" (click)="openFullcharacteristics()">Show all characteristics</button>
+            </div>
         </div>
    
 </div>
 
 <div class="previously-opened-container" >
     <h1 style="text-align: center;">Previously viewed adds</h1>
-    <ng-container class="opened-adds" *ngIf="recentlyViewedAdverts.length==0">
-        <h1>You haven't view any adverts before</h1>
+    <ng-container style="display: flex; justify-content: center;" class="opened-adds" *ngIf="recentlyViewedAdverts.length==0">
+        <h1 style="justify-content: center;">You haven't viewed any adverts before</h1>
     </ng-container> 
     <div class="opened-adds" style="background-color: steelblue;" *ngIf="recentlyViewedAdverts.length > 0">
         <div class="row-container" *ngFor="let advert of this.recentlyViewedAdverts">
@@ -97,23 +100,77 @@
 </div>
 
 
-<!-- <div class="previously-opened-container">
-    <h1 style="text-align: center;">Previously viewed adds</h1>
-    <ng-container class="opened-adds" *ngIf="recentlyViewedAdverts.length == 0">
-        <h1>You haven't viewed any adverts before</h1>
-    </ng-container>
-    <div class="opened-adds" *ngIf="recentlyViewedAdverts.length > 0">
-        <div class="row-container" *ngFor="let advert of recentlyViewedAdverts">
-            <div class="advert-inside-container" (click)="onAdvertClicked(advert.id)">
-                <div class="advert-image">
-                    <img [src]="'data:image/png;base64,'+advert.images[0]" alt="Img">
-                </div>
-                <div class="advert-description">
-                    <h1>{{ advert.brand }} {{ advert.model }}</h1>
-                    <strong>Price: {{ advert.price }}</strong>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
+<div *ngIf="showAllCharacteristics" class="modal-overlay" ></div>
 
+<div *ngIf="showAllCharacteristics" class="modal-container">
+    <h3 style="text-align: center;">Key Characteristics</h3>
+            <table class="table" style="width: 100%; border-radius: 5px;">
+            <thead style="border-radius: 10px;">
+                <tr>
+                <th>Characteristic</th>
+                <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Brand</td>
+                    <td>{{advert.brand}}</td>
+                </tr>
+                <tr>
+                    <td>Model</td>
+                    <td>{{advert.model}}</td>
+                </tr>
+                <tr>
+                    <td>Year of manufacturing</td>
+                    <td>{{advert.dateOfManufacturing.substring(0,4)}}</td>
+                </tr>
+                <tr>
+                    <td>Engine</td>
+                    <td>{{advert.engine}}</td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td>{{advert.price}}</td>
+                </tr>
+                <tr>
+                    <td>Horsepower</td>
+                    <td>{{advert.horsePower || 'not specified'}}</td>
+                </tr>
+                <tr>
+                    <td>Mileage</td>
+                    <td>{{advert.mileage || 'not specified'}}</td>
+                </tr>
+                <tr>
+                    <td>Gearbox</td>
+                    <td>{{advert.gearbox || 'not specified'}}</td>
+                </tr>
+                <tr>
+                    <td>Color</td>
+                    <td>{{advert.color || 'not specified'}}</td>
+                </tr>
+                <tr>
+                    <td>Engine type</td>
+                    <td>{{advert.engineType || 'not specified'}}</td>
+                </tr>
+                <tr>
+                    <td>Euro emissions standard</td>
+                    <td>{{advert.euroEmmissions || 'not specified'}}</td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>{{advert.locationOfTheCar || 'not specified'}}</td>
+                </tr>
+                <tr>
+                    <td>owner name</td>
+                    <td>{{owner.firstName}} {{owner.secondName}}</td>
+                </tr>
+                <tr>
+                    <td>Owner email</td>
+                    <td>{{owner.email}}</td>
+                </tr>           
+            </tbody>
+            </table>
+            <div style="display: flex; justify-content: center;">
+                <button class="close-all-characteristics" (click)="closeAllCharacteristics()">Close table</button>
+            </div>      
+</div>

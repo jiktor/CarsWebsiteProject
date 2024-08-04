@@ -72,6 +72,46 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 	}
 
 	@Override
+	public void saveCarAdvertNew(CarAdvertDto advertDto, HttpServletRequest request) {
+		CarAdvertsDao carAdvertsDao = mapper.map(advertDto, CarAdvertsDao.class);
+		carAdvertsDao.setDescription(advertDto.getDescription());
+		carAdvertsDao.setModel(modelsService.getModelsByModel(Models.valueOf(advertDto.getModel())));
+		carAdvertsDao.setOwner(usreService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7))));
+		carAdvertsDao.setImageData(new HashSet<ImageDao>());
+		if(advertDto.getMileage() != null && advertDto.getMileage() != ""){
+			carAdvertsDao.setMileage(advertDto.getMileage());
+		}
+		if(advertDto.getHorsePower() != null && advertDto.getHorsePower() != ""){
+			carAdvertsDao.setHorsePower(advertDto.getHorsePower());
+		}
+		if(advertDto.getGearbox() != null && advertDto.getGearbox() != ""){
+			carAdvertsDao.setGearbox(advertDto.getGearbox());
+		}
+		if(advertDto.getColor() != null && advertDto.getColor() != ""){
+			carAdvertsDao.setColor(advertDto.getColor());
+		}
+		if(advertDto.getEngineType() != null && advertDto.getEngineType() != ""){
+			carAdvertsDao.setEngineType(advertDto.getEngineType());
+		}
+		if(advertDto.getEuroEmmissions() != null && advertDto.getEuroEmmissions() != ""){
+			carAdvertsDao.setEuroEmmissions(advertDto.getEuroEmmissions());
+		}
+		if(advertDto.getLocationOfTheCar() != null && advertDto.getLocationOfTheCar() != ""){
+			carAdvertsDao.setLocationOfTheCar(advertDto.getLocationOfTheCar());
+		}
+//		if(advertDto.getCondition() != null && advertDto.getCondition() != ""){
+//			carAdvertsDao.setCondition(advertDto.getCondition());
+//		}
+		//TODO ако няма снимки гърми -> проверка зя NULL
+		for(byte [] dtoImage : advertDto.getImages()){
+			ImageDao imageDao = new ImageDao();
+			imageDao.setImage(dtoImage);
+			carAdvertsDao.getImageData().add(imageDao);
+		}
+		carAdvertsRepository.save(carAdvertsDao);
+	}
+
+	@Override
 	public List<CarAdvertDto> getPreviouslyViewedAdds(HttpServletRequest request, Long advertId) {
 		List <Long> advertsId = new ArrayList<>();
 		List <CarAdvertsDao> carAdvertsDaoList = new ArrayList<>();
@@ -393,7 +433,14 @@ public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pa
 				.setDescription(carAdvertsDao.getDescription())
 				.setEngine(carAdvertsDao.getEngine())
 				.setImages(imagesSet)
-				.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name());
+				.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name())
+				.setHorsePower(carAdvertsDao.getHorsePower())
+				.setMileage(carAdvertsDao.getMileage())
+				.setGearbox(carAdvertsDao.getGearbox())
+				.setColor(carAdvertsDao.getColor())
+				.setEngineType(carAdvertsDao.getEngineType())
+				.setEuroEmmissions(carAdvertsDao.getEuroEmmissions())
+				.setLocationOfTheCar(carAdvertsDao.getLocationOfTheCar());
 		list.add(carAdvertDto);
 	}
 	//
@@ -437,7 +484,7 @@ public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pa
 		//Logic for returning number of pages basedon total number of ads and the size of the page
 		return  (advertsCount>pageSize) ? ((advertsCount%pageSize)>0) ? ((advertsCount/pageSize)+1):((advertsCount/pageSize)) : (1);
 	}
-
+	//this service is being used
 	@Override
 	public Object getSingleAdvert(Long advertId, HttpServletRequest request) {
 		CarAdvertsDao carAdvertsDao = carAdvertsRepository.getReferenceById(advertId);
@@ -451,7 +498,14 @@ public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pa
 				.setEngine(carAdvertsDao.getEngine())
 				.setDescription(carAdvertsDao.getDescription())
 				.setPrice(carAdvertsDao.getPrice())
-				.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing());
+				.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
+				.setHorsePower(carAdvertsDao.getHorsePower())
+				.setMileage(carAdvertsDao.getMileage())
+				.setGearbox(carAdvertsDao.getGearbox())
+				.setColor(carAdvertsDao.getColor())
+				.setEngineType(carAdvertsDao.getEngineType())
+				.setEuroEmmissions(carAdvertsDao.getEuroEmmissions())
+				.setLocationOfTheCar(carAdvertsDao.getLocationOfTheCar());
 
 		for(ImageDao image : carAdvertsDao.getImageData()){
 			carAdvertDto.getImages().add(image.getImage());
