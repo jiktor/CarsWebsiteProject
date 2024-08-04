@@ -33,20 +33,7 @@ export class CreateAdvertService{
       return this.httpClient.get<CreateAdvertModel>('http://localhost:8080/cars-advert-website/viewAdverts/getSingleAdvert',{headers,params});
     }
 
-    // getAllAdverts(): Observable<CreateAdvertModel[]>{
-
-    //   const headers = new HttpHeaders({
-    //     'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
-    //   });
-    //   console.log('headr sent from service'+headers)
-      
-
-    //   return this.httpClient
-    //               .get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/all',
-    //                                 {headers});
-      
-    // }
-
+    //doniq servis se izpolzwa -> veroqtno go izpolzwam pyrwiq pyt pri otwarqne na stranica -> toest moje da se mahne
     getAdvertsWithPagination(pageNumber: string, pageSize): Observable<CreateAdvertModel[]>{
 
       const headers = new HttpHeaders({
@@ -64,6 +51,7 @@ export class CreateAdvertService{
                                     {headers,params});
       
     }
+    
     getAdvertsWithPaginationAndFilter(pageNumber: string, pageSize: string, brand: string, model:string, orderSelect: string, toPrice: string, fromPrice: string, fromYear: string, toYear: string): Observable<CreateAdvertModel[]>{
 
       const headers = new HttpHeaders({
@@ -88,17 +76,7 @@ export class CreateAdvertService{
 
     }
 
-    createAdvert(advertDto : CreateAdvertModel): Observable<HttpClient>{
 
-      const headers = new HttpHeaders({
-          'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
-        });
-        
-     return  this.httpClient
-                  .post<HttpClient>('http://localhost:8080/cars-advert-website/createAdvert/saveAdvert',
-                  advertDto,
-                   {headers});
-  }
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!dolniq service e realbiq kojto se izpolwa !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
   createAdvertFormData(advertDto : FormData): Observable<HttpClient>{
 
@@ -112,6 +90,7 @@ export class CreateAdvertService{
                  {headers});
 }
 
+//used initially when loading page with adverts to show count of pages without filter
 getPagesCount(adsPerPage: string): Observable<string>{
 
   const headers = new HttpHeaders({

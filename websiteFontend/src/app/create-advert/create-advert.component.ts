@@ -132,18 +132,6 @@ onBrandSelect() {
                       }));
   }
 
-  createAdvert(advertDto: CreateAdvertModel){
-      this.createAdvertService.createAdvert(advertDto).subscribe((response) =>{
-        console.log(response);
-      })
-  }
-  
-  // addAnotherImage(){
-  //   (<FormArray>this.createAdvertForm.get('images')).push(new FormControl(null,Validators.required))
-  // }
-  // deleteImageInput(i: number){
-  //   (<FormArray>this.createAdvertForm.get('images')).removeAt(i);
-  // }
 
   onFileSelected(event: any): void {
     if(event.target.files){

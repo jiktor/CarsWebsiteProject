@@ -20,7 +20,6 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/cars-advert-website/createAdvert")
-//@CrossOrigin(origins = "http://localhost:4200/cars-advert-website/createAdvert")
 public class CreateCarAdvertsController {
 	private final  CarAdvertsService carAdvertsService;
 	private final ModelsService modelsService;
@@ -39,33 +38,6 @@ public class CreateCarAdvertsController {
 			){
 		return ResponseEntity.ok(modelsService.getModelsByBrand(Brands.valueOf(brand)));
 	}
-	@PostMapping("/save")
-	public ResponseEntity createAdvert(@RequestParam("model") String model,
-									   @RequestParam("brand") String brand,
-									   @RequestParam("price") String price,
-									   @RequestParam("engine") String engine,
-									   @RequestParam("dateOfManufacturing") String dateOfManufacturing,
-									   @RequestParam("description") String description,
-									   @RequestParam(value = "images",required = false) MultipartFile[] images,
-									   @NonNull HttpServletRequest request){
-		CarAdvertDto carAdvertDto = null;
-		try {
-			carAdvertDto = new CarAdvertDto()
-					.setBrand(brand)
-					.setModel(model)
-					.setDateOfManufacturing(Date.valueOf(dateOfManufacturing))
-					.setDescription(description)
-					.setEngine(engine)
-					.setPrice(Float.valueOf(price));
-			if(images != null) {
-				carAdvertDto.setImages(convertMultipartFilesToBytes(List.of(images)));
-			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		carAdvertsService.saveCarAdvert(carAdvertDto,request);
-		return ResponseEntity.ok("success");
-	}
 
 	@PostMapping("/saveAdvert")
 	public ResponseEntity saveAdvert(@RequestParam("model") String model,
@@ -82,7 +54,6 @@ public class CreateCarAdvertsController {
 									   @RequestParam(value = "engineType", required = false) String engineType,
 									   @RequestParam(value = "euroEmissions", required = false) String euroEmissions,
 									   @RequestParam(value = "locationOfTheCar", required = false) String locationOfTheCar,
-//									   @RequestParam(value = "condition", required = false) String condition,
 									   @NonNull HttpServletRequest request){
 		CarAdvertDto carAdvertDto = null;
 		try {
@@ -100,7 +71,6 @@ public class CreateCarAdvertsController {
 					.setEngineType(engineType)
 					.setEuroEmmissions(euroEmissions)
 					.setLocationOfTheCar(locationOfTheCar);
-//					.setCondition(condition);
 			if(images != null) {
 				carAdvertDto.setImages(convertMultipartFilesToBytes(List.of(images)));
 			}

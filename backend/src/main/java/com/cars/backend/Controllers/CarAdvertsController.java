@@ -27,47 +27,6 @@ public class CarAdvertsController {
 		this.carAdvertsService=carAdvertsService;
 		this.modelsService = modelsService;
 	}
-	@GetMapping("/all")
-	public List<CarAdvertDto> getAllAdevrts(){
-		return carAdvertsService.getAllAdverts();
-	}
-	@GetMapping("/countPages")
-	public Long getCountNumberOfPagesAdverts(@RequestParam(value = "adsPerPage", required = true, defaultValue = "3") int adsPerPage){
-		return carAdvertsService.getAllAdvertsCount(adsPerPage);
-	}
-	//!!below is the original working method for getting adverts with filtration and pagination
-//	@GetMapping("/getAdverts")
-//	public ResponseEntity<List<CarAdvertDto>> getAdvertsWithPagination(
-//			@RequestParam(value = "pageNumber", defaultValue = "0",required = false) int pageNumber,
-//			@RequestParam(value = "pageSize", defaultValue = "3", required = false) int pageSize,
-//			@RequestParam(value = "sortField",required = false) String sortField,
-//			@RequestParam(value = "sortOrder", required = false) String sortOrder,
-//			@RequestParam(value = "model",required = false) String model,
-//			@RequestParam(value = "brand",required = false) String brand,
-//			@RequestParam(value = "fromPrice",required = false) String fromPrice,
-//			@RequestParam(value = "toPrice",required = false) String toPrice,
-//			@RequestParam(value = "engine",required = false) String engine,
-//			@RequestParam(value = "dateOfManufacturing",required = false) String dateOfManufacturing){
-//		//if(sortField == null && sortOrder == null ) {
-//		//	return ResponseEntity.ok(carAdvertsService.getAdvertsWithPagination(pageNumber, pageSize));
-//		//} else{
-//
-//			// метод от сървис за сортиране
-//			return ResponseEntity.ok(carAdvertsService.getAdvertsWithFiltrationAndPaginationAndSorting(
-//					pageNumber,
-//					pageSize,
-//					sortField,
-//					sortOrder,
-//					engine,
-//					brand,
-//					model,
-//					dateOfManufacturing,
-//					fromPrice,
-//					toPrice));
-//		}
-		//!!above is the originial working controller method for filtering with pagination
-	//@@@@@@@@@@@@@@@@@@@@@@@
-	//!! below is the new method which should add filtering by date
 		@GetMapping("/getAdverts")
 		public ResponseEntity<List<CarAdvertDto>> getAdvertsWithPagination(
 				@RequestParam(value = "pageNumber", defaultValue = "0",required = false) int pageNumber,
@@ -82,9 +41,6 @@ public class CarAdvertsController {
 				@RequestParam(value = "fromDate",required = false) String fromDate,
 				@RequestParam(value = "toDate",required = false) String toDate,
 				@RequestParam(value = "dateOfManufacturing",required = false) String dateOfManufacturing) throws ParseException {
-			//if(sortField == null && sortOrder == null ) {
-			//	return ResponseEntity.ok(carAdvertsService.getAdvertsWithPagination(pageNumber, pageSize));
-			//} else{
 
 			// метод от сървис за сортиране
 			return ResponseEntity.ok(carAdvertsService.getAdvertsWithFiltrationAndPaginationAndSorting(
@@ -127,11 +83,7 @@ public class CarAdvertsController {
 			@RequestParam(value = "toPrice",required = false) String toPrice,
 			@RequestParam(value = "engine",required = false) String engine,
 			@RequestParam(value = "dateOfManufacturing",required = false) String dateOfManufacturing){
-		//if(sortField == null && sortOrder == null ) {
-		//	return ResponseEntity.ok(carAdvertsService.getAdvertsWithPagination(pageNumber, pageSize));
-		//} else{
 
-		// метод от сървис за сортиране
 		return ResponseEntity.ok(carAdvertsService.getAdvertsCountWithFilter(
 				pageNumber,
 				pageSize,

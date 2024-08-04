@@ -13,24 +13,11 @@ public interface CarAdvertsService {
 	public void saveCarAdvert(CarAdvertDto advertDto,@NonNull HttpServletRequest request);
 	public void saveCarAdvertNew(CarAdvertDto advertDto,@NonNull HttpServletRequest request);
 	public List<CarAdvertDto> getPreviouslyViewedAdds(@NonNull HttpServletRequest request, Long advrtId);
-	public List<CarAdvertDto> getAllAdverts();
-	public List<CarAdvertDto> getAdvertsWithPagination(int pageNumber, int pageSize);
-	public List<CarAdvertDto> getAdvertsWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder);
-	public List<CarAdvertDto> getAdvertsByEngineWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder,String engine);
-	public Long getAllAdvertsCount(int adsPerPage);
-	//!!below is the original working service method for fitration
-//	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
-//																			  int pageSize,
-//																			  String sortField,
-//																			  String sortOrder,
-//																			  String engine,
-//																			  String brand,
-//																			  String model,
-//																			  String dateOfManufacturing,
-//																			  String fromPrice,
-//																			  String toPrice);
-	//!!above is the original working method for filtration
-	//!!below is the new method for filtration
+//	public List<CarAdvertDto> getAllAdverts();
+//	public List<CarAdvertDto> getAdvertsWithPagination(int pageNumber, int pageSize);
+//	public List<CarAdvertDto> getAdvertsWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder);
+//	public List<CarAdvertDto> getAdvertsByEngineWithPaginationAndSorting(int pageNumber, int pageSize,String sortField, String sortOrder,String engine);
+//	public Long getAllAdvertsCount(int adsPerPage);
 	public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pageNumber,
 																			  int pageSize,
 																			  String sortField,
@@ -42,7 +29,7 @@ public interface CarAdvertsService {
 																			  String toDate,
 																			  String fromPrice,
 																			  String toPrice) throws ParseException;
-	//!!above is the new method for filtration
+
 	public Long getAdvertsCountWithFilter(int pageNumber,
 										  int pageSize,
 										  String sortField,

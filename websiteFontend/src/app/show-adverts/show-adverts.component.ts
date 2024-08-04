@@ -175,6 +175,7 @@ getNumberOfTotalPages(){
     
 
   applyFilter() {
+    this.currentPage=0;
     this.subscription = 
       this.createAdvertService.
       getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice,this.fromYear,this.toYear).subscribe((data:CreateAdvertModel[])=>{
@@ -203,7 +204,7 @@ getNumberOfTotalPages(){
   }
 
   nextPageEvent() {
-    if(this.currentPage < parseInt(this.totalPages)){
+    if(this.currentPage < parseInt(this.totalPages)-1){
       this.currentPage++;
 
       this.createAdvertService.
@@ -225,7 +226,7 @@ getNumberOfTotalPages(){
   }
 
   lastPageEvent() {
-    this.currentPage = parseInt(this.totalPages);
+    this.currentPage = parseInt(this.totalPages)-1;
 
     this.createAdvertService.
       getAdvertsWithPaginationAndFilter(this.currentPage.toString(),this.numberOfAdsPerPage,this.filterBrand,this.filterModel,this.filterOrderSelect,this.filterToPrice,this.filterFromPrice,this.fromYear,this.toYear).subscribe((data:CreateAdvertModel[])=>{
