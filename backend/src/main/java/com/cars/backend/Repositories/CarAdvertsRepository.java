@@ -3,6 +3,7 @@ package com.cars.backend.Repositories;
 import com.cars.backend.Models.Dao.BrandsDao;
 import com.cars.backend.Models.Dao.CarAdvertsDao;
 import com.cars.backend.Models.Dao.ModelsDao;
+import com.cars.backend.Models.Dao.UserDao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -75,5 +76,10 @@ public interface CarAdvertsRepository extends JpaRepository<CarAdvertsDao,Long> 
 											@Param("dateOfManufacturing") Date dateOfManufacturing);
 
 	public Optional<CarAdvertsDao> findById(Long id);
+
+	Page<CarAdvertsDao> findByOwner(UserDao owner, Pageable pageable);
+
+	@Query("SELECT COUNT(c) FROM CarAdvertsDao c WHERE c.owner = :owner")
+	Long countByOwner(@Param("owner") UserDao owner);
 }
 

@@ -1,22 +1,27 @@
 package com.cars.backend.Services.Impl;
 
+import com.cars.backend.Models.Dao.CarAdvertsDao;
 import com.cars.backend.Models.Dao.UserDao;
+import com.cars.backend.Models.Dto.CarAdvertDto;
 import com.cars.backend.Repositories.UserRepository;
 import com.cars.backend.Services.JwtService;
-import com.cars.backend.Services.UsreService;
+import com.cars.backend.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UsreServiceImpl implements UsreService {
+public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final JwtService jwtService;
 	@Autowired
-	public UsreServiceImpl(UserRepository userRepository, JwtService jwtService) {
+	public UserServiceImpl(UserRepository userRepository, JwtService jwtService) {
 		this.userRepository = userRepository;
 		this.jwtService = jwtService;
 	}
@@ -47,4 +52,5 @@ public class UsreServiceImpl implements UsreService {
 		userDao.getRecentlyViewdAdverts().add(carAdvertId);
 		saveUser(userDao);
 	}
+
 }

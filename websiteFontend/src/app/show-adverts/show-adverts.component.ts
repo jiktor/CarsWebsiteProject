@@ -77,11 +77,6 @@ export class ShowAdvertsComponent {
 
   ngOnInit(): void {
 
-  //   if(!localStorage?.getItem('jwtToken')){
-  //     alert("You must be logged in to view Adverts");
-  //     this.router.navigateByUrl('cars-advert-website/login');
-  //  }
-
     this.getBrands();
     this.getNumberOfTotalPages();
   }
@@ -101,7 +96,6 @@ export class ShowAdvertsComponent {
 getNumberOfTotalPages(){
   this.subscription = this.createAdvertService.getPagesCount(this.numberOfAdsPerPage).subscribe((data:string) => {
     this.totalPages = data;
-    console.log("number of pages: " + this.totalPages);
   });
 }
   getAdvertsWithPagination(){

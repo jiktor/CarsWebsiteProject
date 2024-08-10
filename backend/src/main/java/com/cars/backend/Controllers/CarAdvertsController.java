@@ -4,15 +4,12 @@ import com.cars.backend.Models.Dto.CarAdvertDto;
 import com.cars.backend.Models.Dto.UserDto;
 import com.cars.backend.Services.CarAdvertsService;
 import com.cars.backend.Services.ModelsService;
+import com.cars.backend.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -22,10 +19,12 @@ import java.util.List;
 public class CarAdvertsController {
 	private final CarAdvertsService carAdvertsService;
 	private final ModelsService modelsService;
+	private final UserService userService;
 	@Autowired
-	public CarAdvertsController(CarAdvertsService carAdvertsService, ModelsService modelsService){
+	public CarAdvertsController(CarAdvertsService carAdvertsService, ModelsService modelsService, UserService userService){
 		this.carAdvertsService=carAdvertsService;
 		this.modelsService = modelsService;
+		this.userService = userService;
 	}
 		@GetMapping("/getAdverts")
 		public ResponseEntity<List<CarAdvertDto>> getAdvertsWithPagination(
@@ -102,6 +101,31 @@ public class CarAdvertsController {
 			@RequestParam(value = "advertId", required = true) int advertId,
 			@NonNull HttpServletRequest request){
 		return ResponseEntity.ok(this.carAdvertsService.getPreviouslyViewedAdds(request, (long) advertId));
+	}
+
+	@GetMapping("/getAdvertsByUser")
+	public ResponseEntity<List<CarAdvertDto>> getRecentlyViwed(
+			@NonNull HttpServletRequest request,
+			@RequestParam(value = "pageNumber", defaultValue = "0",required = false) int pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize){
+		return ResponseEntity.ok(this.carAdvertsService.getAdvertsForUser(request,pageNumber,pageSize));
+	}
+	@GetMapping("/getAdvertsByUserPagesCount")
+	public ResponseEntity<Long> getNumberOfPagesForUserAds(
+			@NonNull HttpServletRequest request,
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize){
+		return ResponseEntity.ok(this.carAdvertsService.getAdvertsForUserCountPages(pageSize,request));
+	}
+
+	@DeleteMapping("/deleteAdvert")
+	public ResponseEntity<String> deleteAdvert(
+			@NonNull HttpServletRequest request,
+			@RequestParam(value = "advertId") int advertId){
+
+		this.carAdvertsService.deleteAdvertById(request,advertId);
+
+		ResponseEntity response =  ResponseEntity.ok("Success");
+		return response;
 	}
 
 	}

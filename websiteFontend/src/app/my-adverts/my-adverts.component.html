@@ -1,0 +1,33 @@
+<div style="height: 100vh; background-color: white;">
+    <div style="border: 1px solid; border-radius: 5px; ">
+    <table class="table">
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Date of Manufacturing</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let advert of myAdverts; let i = index">
+            <td>{{ advert.brand }}</td>
+            <td>{{ advert.model }}</td>
+            <td>{{ advert.price }}</td>
+            <td>{{ advert.dateOfManufacturing }}</td>
+            <td>
+              <button (click)="deleteAdvert(advert.id)" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+        <a>{{this.currentPage+1}}/{{this.numberOfPages}}</a>
+      </div>
+      <div style="display: flex; justify-content: center; width: 100%">
+        <button style="width: 50%;" (click)="previousPage()">Prevoius Page</button>
+        <button style="width: 50%;" (click)="nextPage()">Next Page</button>
+    </div>
+    </div>    
+</div>

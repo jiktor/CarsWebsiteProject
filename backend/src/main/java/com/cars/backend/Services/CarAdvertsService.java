@@ -39,4 +39,9 @@ public interface CarAdvertsService {
 	Object getSingleAdvert(Long advertId, HttpServletRequest request);
 
 	Object getOwnerByAdvert(Long advertId);
+	public List<CarAdvertDto> getAdvertsForUser(HttpServletRequest request, Integer pageNumber, Integer pageSize);
+
+	Long getAdvertsForUserCountPages(int pageSize, HttpServletRequest request);
+
+	void deleteAdvertById(HttpServletRequest request, int advertId);
 }

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -26,16 +25,16 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 	private final CarAdvertsRepository carAdvertsRepository;
 	private final ModelsService modelsService;
 	private final BrandsService brandsService;
-	private final UsreService usreService;
+	private final UserService userService;
 	private final JwtService jwtService;
 	private final ModelMapper mapper;
 	private final ImageRepository imageRepository;
 	@Autowired
-	public CarAdvertsServiceImpl(CarAdvertsRepository carAdvertsRepository, ModelsService modelsService, BrandsService brandsService, UsreService usreService, JwtService jwtService, ModelMapper mapper, ImageRepository imageRepository){
+	public CarAdvertsServiceImpl(CarAdvertsRepository carAdvertsRepository, ModelsService modelsService, BrandsService brandsService, UserService userService, JwtService jwtService, ModelMapper mapper, ImageRepository imageRepository){
 		this.carAdvertsRepository = carAdvertsRepository;
 		this.modelsService = modelsService;
 		this.brandsService = brandsService;
-		this.usreService = usreService;
+		this.userService = userService;
 		this.jwtService = jwtService;
 		this.mapper = mapper;
 		this.imageRepository = imageRepository;
@@ -51,7 +50,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 
 		carAdvertsDao.setDescription(advertDto.getDescription());
 		carAdvertsDao.setModel(modelsService.getModelsByModel(Models.valueOf(advertDto.getModel())));
-		carAdvertsDao.setOwner(usreService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7))));
+		carAdvertsDao.setOwner(userService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7))));
 		carAdvertsDao.setImageData(new HashSet<ImageDao>());
 		if(advertDto.getMileage() != null && advertDto.getMileage() != ""){
 			carAdvertsDao.setMileage(advertDto.getMileage());
@@ -87,7 +86,7 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 		List <Long> advertsId = new ArrayList<>();
 		List <CarAdvertsDao> carAdvertsDaoList = new ArrayList<>();
 		List <CarAdvertDto> result = new ArrayList<>();
-		UserDao userDao = usreService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7)));
+		UserDao userDao = userService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7)));
 		if(userDao.getRecentlyViewdAdverts() != null) {
 			for (Long id : userDao.getRecentlyViewdAdverts()) {
 				CarAdvertsDao carAdvertsDao = carAdvertsRepository.findById(id).get();
@@ -112,12 +111,12 @@ public class CarAdvertsServiceImpl implements CarAdvertsService {
 			}
 		}
 		if(userDao.getRecentlyViewdAdverts() == null){
-			usreService.updateLastCheckedRequest(request,advertId);
+			userService.updateLastCheckedRequest(request,advertId);
 		}
 		else {
 			for(int i =0 ; i<userDao.getRecentlyViewdAdverts().size(); i++) {
 				if(advertId.equals(userDao.getRecentlyViewdAdverts().get(i))) break;
-				if((i+1) == userDao.getRecentlyViewdAdverts().size())usreService.updateLastCheckedRequest(request, advertId);
+				if((i+1) == userDao.getRecentlyViewdAdverts().size()) userService.updateLastCheckedRequest(request, advertId);
 			}
 		}
 
@@ -294,5 +293,69 @@ public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pa
 		return userDto;
 	}
 
+	@Override
+	public List<CarAdvertDto> getAdvertsForUser(HttpServletRequest request, Integer pageNumber,Integer pageSize) {
 
+		org.springframework.data.domain.Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		UserDao userDao = userService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7)));
+		Page<CarAdvertsDao> carAdvertsDaoPage = carAdvertsRepository.findByOwner(userDao, pageable);
+		List<CarAdvertsDao> carAdvertsDaoList = carAdvertsDaoPage.getContent();
+		//converting dao to dto object
+		List <CarAdvertDto> list = new ArrayList<>();
+		for(CarAdvertsDao carAdvertsDao : carAdvertsDaoList){
+			CarAdvertDto carAdvertDto = new CarAdvertDto();
+
+			Set<byte[]> imagesSet = new HashSet<>();
+			for(ImageDao image : carAdvertsDao.getImageData()){
+				imagesSet.add(image.getImage());
+			}
+
+			carAdvertDto
+					.setId(carAdvertsDao.getId())
+					.setModel(carAdvertsDao.getModel().getModel().name())
+					.setDateOfManufacturing(carAdvertsDao.getDateOfManufacturing())
+					.setPrice(carAdvertsDao.getPrice())
+					.setDescription(carAdvertsDao.getDescription())
+					.setEngine(carAdvertsDao.getEngine())
+					.setImages(imagesSet)
+					.setBrand(carAdvertsDao.getModel().getBrand().getBrand().name())
+					.setHorsePower(carAdvertsDao.getHorsePower())
+					.setMileage(carAdvertsDao.getMileage())
+					.setGearbox(carAdvertsDao.getGearbox())
+					.setColor(carAdvertsDao.getColor())
+					.setEngineType(carAdvertsDao.getEngineType())
+					.setEuroEmmissions(carAdvertsDao.getEuroEmmissions())
+					.setLocationOfTheCar(carAdvertsDao.getLocationOfTheCar());
+			list.add(carAdvertDto);
+		}
+		return list;
+	}
+
+	@Override
+	public Long getAdvertsForUserCountPages(int pageSize, HttpServletRequest request) {
+		UserDao userDao = userService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7)));
+		Long allAdds = carAdvertsRepository.countByOwner(userDao);
+		if(allAdds <= pageSize){
+			return 1l;
+		}else{
+			if(allAdds % pageSize == 0){
+				return allAdds/pageSize;
+			}else{
+				return allAdds/pageSize +1;
+			}
+		}
+	}
+
+	@Override
+	public void deleteAdvertById(HttpServletRequest request, int advertId) {
+
+		UserDao userDao = userService.findUserByEmail(jwtService.extractUsername(request.getHeader("Authorization").substring(7)));
+		CarAdvertsDao carAdvertsDao = carAdvertsRepository.getReferenceById(Long.valueOf(advertId));
+
+		if(carAdvertsDao.getOwner().getId() != userDao.getId()){
+			throw new RuntimeException();
+		}else{
+			this.carAdvertsRepository.deleteById(Long.valueOf(advertId));
+		}
+	}
 }

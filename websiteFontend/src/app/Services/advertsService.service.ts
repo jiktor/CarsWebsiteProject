@@ -157,5 +157,42 @@ getPreviouslyViewdAdverts (advertId): Observable<CreateAdvertModel[]>{
                     {headers,params});
 
 }
+
+getAdvertsByOwner(pageNumber,pageSize): Observable<CreateAdvertModel[]>{
+
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+  });
+
+  const params = new HttpParams()
+  .set('pageNumber', pageNumber)
+  .set('pageSize',pageSize);
+
+  return this.httpClient.get<CreateAdvertModel[]>('http://localhost:8080/cars-advert-website/viewAdverts/getAdvertsByUser',{headers,params});
+}
+
+getAdvertsByOwnerCountPages(pageSize): Observable<string>{
+
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+  });
+
+  const params = new HttpParams()
+  .set('pageSize',pageSize);
+
+  return this.httpClient.get<string>('http://localhost:8080/cars-advert-website/viewAdverts/getAdvertsByUserPagesCount',{headers,params});
+}
+
+deleteAdvertById(id): Observable<any>{
+
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer '+localStorage.getItem('jwtToken'),
+  });
+
+  const params = new HttpParams()
+  .set('advertId',id);
+
+  return this.httpClient.delete('http://localhost:8080/cars-advert-website/viewAdverts/deleteAdvert',{headers,params});
+}
     
 }
