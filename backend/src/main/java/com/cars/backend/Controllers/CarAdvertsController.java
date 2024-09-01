@@ -40,7 +40,6 @@ public class CarAdvertsController {
 				@RequestParam(value = "fromDate",required = false) String fromDate,
 				@RequestParam(value = "toDate",required = false) String toDate,
 				@RequestParam(value = "dateOfManufacturing",required = false) String dateOfManufacturing) throws ParseException {
-
 			// метод от сървис за сортиране
 			return ResponseEntity.ok(carAdvertsService.getAdvertsWithFiltrationAndPaginationAndSorting(
 					pageNumber,

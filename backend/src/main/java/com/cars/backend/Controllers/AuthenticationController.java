@@ -15,7 +15,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestController
 @RequestMapping("/cars-advert-website/authentication")
-//@CrossOrigin(origins = "http://localhost:4200/*")
 public class AuthenticationController {
 	private final AuthenticationService authenticationService;
 	@Autowired
@@ -29,7 +28,8 @@ public class AuthenticationController {
 			return ResponseEntity.ok(authenticationService.register(request));
 	}
 	@PostMapping("/authenticate")
-	public ResponseEntity<AuthenticationResponse> register(
+
+	public ResponseEntity<AuthenticationResponse> authenticate(
 			@RequestBody AuthenticationRequest request
 	){
 		return ResponseEntity.ok(authenticationService.authenticate(request));

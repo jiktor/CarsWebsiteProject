@@ -248,7 +248,7 @@ public List<CarAdvertDto> getAdvertsWithFiltrationAndPaginationAndSorting(int pa
 			dateManufacturing = new Date(dateOfManufacturing);
 		}
 		Long advertsCount = carAdvertsRepository.findCountWithParams(modelsDaoId,brandsDaoId,fromPriceact,toPriceact,engine,dateManufacturing);
-		//Logic for returning number of pages basedon total number of ads and the size of the page
+		//Logic for returning number of pages based on total number of ads and the size of the page
 		return  (advertsCount>pageSize) ? ((advertsCount%pageSize)>0) ? ((advertsCount/pageSize)+1):((advertsCount/pageSize)) : (1);
 	}
 	//this service is being used

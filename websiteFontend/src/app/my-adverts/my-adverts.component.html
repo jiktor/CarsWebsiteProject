@@ -6,7 +6,7 @@
             <th>Brand</th>
             <th>Model</th>
             <th>Price</th>
-            <th>Date of Manufacturing</th>
+            <th>Year of Manufacturing</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -15,7 +15,7 @@
             <td>{{ advert.brand }}</td>
             <td>{{ advert.model }}</td>
             <td>{{ advert.price }}</td>
-            <td>{{ advert.dateOfManufacturing }}</td>
+            <td>{{ advert.dateOfManufacturing.substring(0,4) }}</td>
             <td>
               <button (click)="deleteAdvert(advert.id)" class="btn btn-danger">Delete</button>
             </td>

@@ -38,12 +38,10 @@ public class UserDao implements UserDetails {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	@Column
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CarAdvertsDao> carAdvertsList;
-
 	@Column
 	private List<Long> recentlyViewdAdverts;
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

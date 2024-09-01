@@ -52,7 +52,6 @@ export class MyAdvertsComponent implements OnInit, OnDestroy {
     this.subscriptionNumberPages = this.createAdvertService.getAdvertsByOwnerCountPages(5).subscribe(
       (data: string) => {
         this.numberOfPages = data;
-        console.log("@@@@@@@@@@@@@@@@@@@@@");
         console.log(data);
       },
       error => this.handleError(error)

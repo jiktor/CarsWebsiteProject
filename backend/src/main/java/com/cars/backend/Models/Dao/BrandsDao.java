@@ -20,6 +20,6 @@ public class BrandsDao {
 	@Enumerated(EnumType.STRING)
 	@NonNull
 	private Brands brand;
-	@OneToMany(mappedBy = "brand")
+	@OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ModelsDao> models;
 }

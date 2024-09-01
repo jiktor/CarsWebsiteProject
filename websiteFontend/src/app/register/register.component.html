@@ -9,14 +9,14 @@
         <label for="fname">First name</label>
         <div>
             <small style="color: red;" *ngIf="reactiveForm.get('firstName').errors?.['noSpaceAllowed'] && reactiveForm.get('firstName').touched">whitespaces are not allowed in this field</small>
-            <small style="color: red;" *ngIf="reactiveForm.get('firstName').errors?.['required'] && reactiveForm.get('firstName').touched">this field is required</small>
+            <small style="color: red;" *ngIf="reactiveForm.get('firstName').errors?.['required'] && reactiveForm.get('firstName').touched">first name field is required</small>
         </div>
         <input type="text" id="fname" formControlName="firstName" placeholder="Enter your name">
 
         <label for="lname">Last name</label>
         <div>
             <small style="color: red;" *ngIf="reactiveForm.get('lastName').errors?.['noSpaceAllowed'] && reactiveForm.get('lastName').touched">whitespaces are not allowed in this field</small>
-            <small style="color: red;" *ngIf="reactiveForm.get('lastName').errors?.['required'] && reactiveForm.get('lastName').touched">this field is required</small>
+            <small style="color: red;" *ngIf="reactiveForm.get('lastName').errors?.['required'] && reactiveForm.get('lastName').touched">last name field is required</small>
         </div>
         <input type="text" id="lname" formControlName="lastName" placeholder="Enter your last name">
 
@@ -35,7 +35,7 @@
         <label for="cpassword">Confirm Password</label>
         <div>
             <small style="color: red;" *ngIf="reactiveForm.get('confirmPassword').errors?.['required'] && reactiveForm.get('confirmPassword').touched">The confirm password field is required</small>
-            <small style="color: red;" *ngIf="reactiveForm.errors?.['passwordMismatchError'] && reactiveForm.get('confirmPassword').touched">passwords dont match</small>
+            <small style="color: red;" *ngIf="reactiveForm.errors?.['passwordMismatchError'] && reactiveForm.get('confirmPassword').touched">passwords doesn't match</small>
         </div>
         <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm your password">
 
